@@ -2,13 +2,13 @@
 
 ## About
 
-A Speech to Text Transcription and Text Summarization based, Minutes of Meeting Generating Tool
+A Speech to Text Transcription and Text Summarization based, Minutes of Meeting Generating Tool.
 
 ## Minimum Requirements
 
 You can find the requirements in requirements.txt file
 
-## Setting up the dev env
+## Setting up the development environment
 
 ### Installing Anaconda
 
@@ -18,9 +18,7 @@ After anaconda is installed successfully, go to the location where you want to s
 environment, open it in command prompt and create a virtual env using the folowing command:
 
 ```
-
 conda create -n summeet --file requirements.txt
-
 ```
 
-### Open VS code and start coding! 
+### Open the dev env in VS code and start coding! 
