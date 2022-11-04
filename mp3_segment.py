@@ -15,21 +15,23 @@ mins += secs
 duration = int(mins)
 print(duration)
 print(type(duration))
-#Selecting Portion we want to cut
-# StrtMin = 0
-# StrtSec = 8
 
-# EndMin = 0
-# EndSec = 22
+# Selecting Portion we want to cut
+StrtMin = 0
+StrtSec = 0
 
-# # Time to milliseconds conversion
-# StrtTime = StrtMin*60*1000+StrtSec*1000
-# EndTime = StrtMin*60*1000+EndSec*1000
+EndMin = 3
+EndSec = 0
 
-# # Opening file and extracting portion of it
-# extract = sound[StrtTime:EndTime]
+# Time to milliseconds conversion
+StrtTime = StrtMin*60*1000+StrtSec*1000
+EndTime = StrtMin*60*1000+EndSec*1000
 
-# # Saving file in required location
-# extract.export("/content/audio/new/portion.mp3", format="mp3")
+# Opening file and extracting portion of it
+extract = sound[StrtTime:EndTime]
 
-# # new file portion.mp3 is saved at required location
+# Saving file in required location
+extract.export("audio_files\sample_video_seg1.mp3", format="mp3")
+
+# new file portion.mp3 is saved at required location
+
