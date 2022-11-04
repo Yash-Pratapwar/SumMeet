@@ -7,7 +7,7 @@ r = sr.Recognizer()
 # Reading Audio file as source
 # listening the audio file and store in audio_text variable
 
-with sr.AudioFile('recording1.wav') as source:
+with sr.AudioFile('audio_files/result.wav') as source:
     
     audio_text = r.record(source)
     
@@ -15,9 +15,12 @@ with sr.AudioFile('recording1.wav') as source:
     try:
         
         # using google speech recognition
-        text = r.recognize_google(audio_text)
+        text = r.recognize_google_cloud(audio_text)
         print('Converting audio transcripts into text ...')
-        with open('transcripted_file.txt', 'w') as file:
+        print('The text has been saved to transcripted_files/transcripted_file.txt')
+        print('====================================================================')
+        print('Transcripted text:\n',text)
+        with open('transcripted_files/transcripted_file.txt', 'w') as file:
             file.writelines(text)
     
     except:

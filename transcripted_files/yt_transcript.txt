@@ -1,0 +1,77 @@
+hello friends and welcome to geeks for
+geeks in this tutorial we will learn how
+to reverse a stack using recursion so
+here is the problem we have to reverse a
+stack and we are not allowed to use
+loops like while four etc we can use
+functions of stacks like is empty push
+and pop the idea of the solution is to
+hold all the values and function call
+stack until the start becomes empty when
+the start becomes empty we insert all
+the hell values one by one at the bottom
+of the start let us now look at how it
+works
+let us assume our stag as 1 2 3 4 with 1
+at top we pop all the values 1 by 1 and
+hold all of them in function call stack
+until this side becomes empty so here we
+go we pop all the values until the side
+becomes empty so a function called stag
+in order is 4 3 2 and 1
+since the stack is empty now we need to
+insert all the hello elements one by one
+at the bottom of stack now how to insert
+elements at the bottom of stack to do so
+we first pop all the elements and hold
+their values in function call stack
+until the start is empty then we push
+the element that was supposed to be
+inserted at the bottom and then we push
+all the elements back let's see how it
+works
+since the stack is empty now we push the
+first element and function called stack
+that is 4 so the stack now becomes 4 I'd
+talk now we need to insert 3 at the end
+according to the algorithm we pop the
+entire stack and hold its value in the
+function called stack then we push the
+element to be inserted at the end so we
+pop 4 and push 3 that is the next
+element in the function call stack so a
+stack becomes 3 at top now we push back
+all the elements and function called
+stack that is element which just popped
+so we push four
+so our staff becomes 4 3 with 4 at the
+top now we need to insert the next held
+value in the function call such that is
+to putting to the algorithm we need to
+pop 4 and 3 and then push 2 at the top
+now we will push back the elements we
+just popped so our stack becomes 4 3 2
+similarly we insert 1 and we can clearly
+see that the stack of the worst let us
+now look at the implementation this code
+has been taken from geeks for geeks
+website the function reverse reverses
+the stack in this function if the stack
+is not empty we hold all the items in
+the function called stack until we reach
+the end of stack then we insert all
+these items one by one at the bottom of
+stack using insert add bottom function
+the function insert at bottom insert an
+element at the bottom of stack if the
+stack is empty we push the element at
+the top else we pop and hold all the
+values in function call stack until we
+reach end of the sack when the start
+becomes empty this statement again
+becomes foo and the element is inserted
+then we push back all the elements that
+we just popped that is the elements held
+in the function call stack that's it for
+this tutorial thank you for watching
+please leave as she likes and comments

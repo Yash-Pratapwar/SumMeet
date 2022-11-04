@@ -1,0 +1,1 @@
+the sample recording test speech to text transcription working of the file the recorded file will be saved in the audio files folder and after that it will be fetched from AED
