@@ -4,10 +4,10 @@ import json
 from transformers import T5Tokenizer, T5ForConditionalGeneration, T5Config
 
 model = T5ForConditionalGeneration.from_pretrained('t5-small')
-tokenizer = T5Tokenizer.from_pretrained('t5-small', model_max_length = 512)
+tokenizer = T5Tokenizer.from_pretrained('t5-small', model_max_length = 1000)
 device = torch.device('cpu')
 
-file = open('sample.txt', 'r')
+file = open('transcripted_files/yt_transcript.txt', 'r')
 text = file.read()
 # text ="""
 # The US has "passed the peak" on new coronavirus cases, President Donald Trump said and predicted that some states would reopen this month.
@@ -36,8 +36,3 @@ summary_ids = model.generate(tokenized_text,  # type: ignore
 output = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
 
 print ("\n\nSummarized text: \n",output)
-
-# Summarized output from above ::::::::::
-# the us has over 637,000 confirmed Covid-19 cases and over 30,826 deaths. 
-# president Donald Trump predicts some states will reopen the country in april, he said. 
-# "we'll be the comeback kids, all of us," the president says.
