@@ -15,6 +15,7 @@ mins += secs
 duration = int(mins)
 print(duration)
 print(type(duration))
+
 # Selecting Portion we want to cut
 StrtMin = 0
 StrtSec = 0
@@ -33,3 +34,4 @@ extract = sound[StrtTime:EndTime]
 extract.export("audio_files\sample_video_seg1.mp3", format="mp3")
 
 # new file portion.mp3 is saved at required location
+
