@@ -1,81 +1,68 @@
-# This file may be used to create an environment using:
-# $ conda create --name <env> --file <this file>
-# platform: win-64
-blas=1.0=mkl
-brotlipy=0.7.0=py310h2bbff1b_1002
-bzip2=1.0.8=he774522_0
-ca-certificates=2022.9.24=h5b45459_0
-certifi=2022.9.24=pyhd8ed1ab_0
-cffi=1.15.1=py310h2bbff1b_0
-charset-normalizer=2.0.4=pyhd3eb1b0_0
-colorama=0.4.5=pypi_0
-comtypes=1.1.14=pypi_0
-cryptography=37.0.1=py310h21b164f_0
-cudatoolkit=10.2.89=h74a9793_1
-docopt=0.6.2=pypi_0
-filelock=3.8.0=pypi_0
-freetype=2.10.4=hd328e21_0
-huggingface-hub=0.10.0=pypi_0
-idna=3.3=pyhd3eb1b0_0
-intel-openmp=2021.4.0=haa95532_3556
-jpeg=9e=h2bbff1b_0
-lerc=3.0=hd77b12b_0
-libdeflate=1.8=h2bbff1b_5
-libffi=3.4.2=hd77b12b_4
-libpng=1.6.37=h2a8f88b_0
-libtiff=4.4.0=h8a3f274_0
-libuv=1.40.0=he774522_0
-libwebp=1.2.2=h2bbff1b_0
-lz4-c=1.9.3=h2bbff1b_1
-mkl=2021.4.0=haa95532_640
-mkl-service=2.4.0=py310h2bbff1b_0
-mkl_fft=1.3.1=py310ha0764ea_0
-mkl_random=1.2.2=py310h4ed8f06_0
-numpy=1.23.1=py310h6d2d95c_0
-numpy-base=1.23.1=py310h206c741_0
-openssl=1.1.1q=h2bbff1b_0
-packaging=21.3=pypi_0
-pillow=9.2.0=py310hdc2b20a_1
-pip=22.2.2=py310haa95532_0
-pipreqs=0.4.11=pypi_0
-portaudio=19.6.0=h0e60522_6
-pyaudio=0.2.12=pypi_0
-pycparser=2.21=pyhd3eb1b0_0
-pyopenssl=22.0.0=pyhd3eb1b0_0
-pyparsing=3.0.9=pypi_0
-pypiwin32=223=pypi_0
-pysocks=1.7.1=py310haa95532_0
-python=3.10.6=hbb2ffb3_0
-python-sounddevice=0.4.1=pyh9f0ad1d_0
-pytorch=1.12.1=py3.10_cpu_0
-pytorch-mutex=1.0=cpu
-pyttsx3=2.90=pypi_0
-pywin32=304=pypi_0
-pyyaml=6.0=pypi_0
-regex=2022.9.13=pypi_0
-requests=2.28.1=py310haa95532_0
-scipy=1.9.3=pypi_0
-sentencepiece=0.1.97=pypi_0
-setuptools=63.4.1=py310haa95532_0
-six=1.16.0=pyhd3eb1b0_1
-sounddevice=0.4.5=pypi_0
-speechrecognition=3.8.1=pypi_0
-sqlite=3.39.3=h2bbff1b_0
-tk=8.6.12=h2bbff1b_0
-tokenizers=0.12.1=pypi_0
-torchvision=0.13.1=py310_cpu
-tqdm=4.64.1=pypi_0
-transformers=4.22.2=pypi_0
-typing_extensions=4.3.0=py310haa95532_0
-tzdata=2022c=h04d1e81_0
-urllib3=1.26.11=py310haa95532_0
-vc=14.2=h21ff451_1
-vs2015_runtime=14.27.29016=h5e58377_2
-wavio=0.0.4=pypi_0
-wheel=0.37.1=pyhd3eb1b0_0
-win_inet_pton=1.1.0=py310haa95532_0
-wincertstore=0.2=py310haa95532_2
-xz=5.2.6=h8cc25b3_0
-yarg=0.1.9=pypi_0
-zlib=1.2.12=h8cc25b3_3
-zstd=1.5.2=h19a0ad4_0
+appdirs==1.4.4
+audioread==3.0.0
+brotlipy==0.7.0
+certifi==2022.12.7
+cffi @ file:///C:/Windows/Temp/abs_6808y9x40v/croots/recipe/cffi_1659598653989/work
+charset-normalizer @ file:///tmp/build/80754af9/charset-normalizer_1630003229654/work
+colorama==0.4.5
+comtypes==1.1.14
+cryptography @ file:///C:/ci/cryptography_1652101729823/work
+decorator==4.4.2
+docopt==0.6.2
+ffmpeg-python==0.2.0
+filelock==3.8.0
+future==0.18.3
+huggingface-hub==0.10.0
+idna @ file:///tmp/build/80754af9/idna_1637925883363/work
+imageio==2.22.3
+imageio-ffmpeg==0.4.7
+joblib==1.2.0
+librosa==0.9.2
+llvmlite==0.39.1
+mkl-fft==1.3.1
+mkl-random @ file:///C:/ci_310/mkl_random_1643050563308/work
+mkl-service==2.4.0
+more-itertools==9.0.0
+moviepy==1.0.3
+numba==0.56.4
+numpy @ file:///C:/Windows/Temp/abs_2a1e1vbeag/croots/recipe/numpy_and_numpy_base_1659432712056/work
+openai-whisper==20230117
+packaging==21.3
+Pillow==9.2.0
+pipreqs==0.4.11
+pooch==1.6.0
+proglog==0.1.10
+PyAudio==0.2.12
+pycparser @ file:///tmp/build/80754af9/pycparser_1636541352034/work
+pydub @ file:///home/conda/feedstock_root/build_artifacts/pydub_1615612442567/work
+pyOpenSSL @ file:///opt/conda/conda-bld/pyopenssl_1643788558760/work
+pyparsing==3.0.9
+pypiwin32==223
+PySocks @ file:///C:/ci_310/pysocks_1642089375450/work
+pyttsx3==2.90
+pytube==12.1.0
+pywin32==304
+PyYAML==6.0
+regex==2022.9.13
+requests @ file:///C:/ci/requests_1657735340829/work
+resampy==0.4.2
+scikit-learn==1.2.0
+scipy==1.9.3
+sentencepiece==0.1.97
+six @ file:///tmp/build/80754af9/six_1644875935023/work
+sounddevice==0.4.5
+soundfile==0.11.0
+SpeechRecognition==3.8.1
+threadpoolctl==3.1.0
+tokenizers==0.12.1
+torch==1.12.1
+torchvision==0.13.1
+tqdm==4.64.1
+transformers==4.22.2
+typing_extensions @ file:///C:/Windows/TEMP/abs_dd2d0moa85/croots/recipe/typing_extensions_1659638831135/work
+urllib3 @ file:///C:/Windows/TEMP/abs_65ynz4fdmi/croots/recipe/urllib3_1659110473919/work
+wavio==0.0.4
+win-inet-pton @ file:///C:/ci_310/win_inet_pton_1642658466512/work
+wincertstore==0.2
+yarg==0.1.9
+youtube-transcript-api==0.5.0
