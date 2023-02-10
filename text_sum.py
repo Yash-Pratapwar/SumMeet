@@ -1,5 +1,7 @@
 from transformers import pipeline
 # summarizer = pipeline("summarization", model="knkarthick/MEETING_SUMMARY", truncation = True)
+file = open('transcripted_files/transcripted_file.txt', 'r')
+# text = file.read()
 text = '''
 Das : Hi and welcome to the a16z podcast. I’m Das, and in this episode, I talk SaaS go-to-market with David Ulevitch and our newest enterprise general partner Kristina Shen. The first half of the podcast looks at how remote work impacts the SaaS go-to-market and what the smartest founders are doing to survive the current crisis. The second half covers pricing approaches and strategy, including how to think about free versus paid trials and navigating the transition to larger accounts. But we start with why it’s easier to move upmarket than down… and the advantage that gives a SaaS startup against incumbents.
 David : If you have a cohort of customers that are paying you $10,000 a year for your product, you’re going to find a customer that self-selects and is willing to pay $100,000 a year. Once you get one of those, your organization will figure out how you sell to, how you satisfy and support, customers at that price point and that size. But it’s really hard for a company that sells up market to move down market, because they’ve already baked in all that expensive, heavy lifting sales motion. And so as you go down market with a lower price point, usually, you can’t actually support it.
@@ -24,6 +26,9 @@ summarizer = pipeline("summarization", model="knkarthick/MEETING_SUMMARY")
 # summarizer = pipeline("summarization")
 summary = summarizer(text, max_length = 200, min_length = 150)
 a = summary[0]['summary_text']
+with open('transcripted_files/sumarized_file.txt', 'w') as file:
+        file.writelines(text)
+
 print(a)
 # a = summary[0]['summary_text'].split()
 # print(len(a))

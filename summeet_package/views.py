@@ -9,7 +9,7 @@ from summeet_package import db, create_app, app
 from werkzeug.utils import secure_filename
 from summeet_package.models import advertisements
 from summeet_package.models import advt_approval
-import text_sum as model
+# import rec_sys as model
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'static/uploads'
