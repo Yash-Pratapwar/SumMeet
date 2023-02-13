@@ -7,13 +7,13 @@ from summeet_package.models import users
 from werkzeug.security import generate_password_hash, check_password_hash
 from summeet_package import db, create_app, app
 from werkzeug.utils import secure_filename
-from summeet_package.models import advertisements
-from summeet_package.models import advt_approval
+from summeet_package.models import uploaded_files
+# from summeet_package.models import advt_approval
 # import rec_sys as model
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'static/uploads'
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+ALLOWED_EXTENSIONS = set(['mp3', 'wav', 'mp4'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 basedir = os.path.abspath(os.path.dirname(__file__))
 views = Blueprint('views', __name__)
@@ -24,26 +24,44 @@ def home():
     return render_template('index.html')
 
 
+@views.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        fname = request.form.get("fname")
+        lname = request.form.get("lname")
+        user_email = request.form.get("user_email")
+        age = request.form.get("age")
+        pswd1 = request.form.get("pswd1")
+        gender = request.form["gender"]
+        # max_id = db.session.query(users).order_by(users.id.desc()).first()
+
+        user = users.query.filter_by(user_email=user_email).first()
+        if user:
+            flash('Email already exists.', category='error')
+            return render_template('user-registration.html')
+        else:
+            hashed_password = generate_password_hash(
+                pswd1, method='sha256')
+            user_regis = users(fname=fname, lname=lname, 
+            user_email=user_email, password=hashed_password, 
+            age=age, gender=gender)
+            db.session.add(user_regis)
+            db.session.commit()
+            flash('Account created! Please login', category='success')
+            return redirect(url_for('views.login'))
+    return render_template('user-registration.html')
+
 @views.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('pswd')
-        user_a = users.query.filter_by(comp_email=email).first()
-        user_i = users.query.filter_by(inf_email=email).first()
-        if user_a:
-            if check_password_hash(user_a.password, password):
+        user = users.query.filter_by(user_email=email).first()
+        if user:
+            if check_password_hash(user.password, password):
                 flash('Logged in successfully!', category='success')
-                login_user(user_a, remember=True)
-                return redirect('/advt/dashboard')
-            else:
-                flash('Incorrect password, try again.', category='error')
-
-        elif user_i:
-            if check_password_hash(user_i.password, password):
-                flash('Logged in successfully!', category='success')
-                login_user(user_i, remember=True)
-                return redirect('/infl/dashboard')
+                login_user(user, remember=True)
+                return redirect('/user/dashboard')
             else:
                 flash('Incorrect password, try again.', category='error')
         else:
@@ -59,55 +77,55 @@ def logout():
     return redirect(url_for('views.home'))
 
 
-@views.route('/advt/dashboard', methods = ['GET', 'POST'])
+@views.route('/user/dashboard', methods = ['GET', 'POST'])
 @login_required
-def advt_dashboard():
-    if current_user.comp_name == None:
+def user_dashboard():
+    if current_user.fname == None:
         flash('Please login')
         return redirect(url_for('views.login'))
     else:
-        name = current_user.comp_name
-        recmd_infl = model.recm_sys(name)
-        owner_id = current_user.id
-        advts_owner= advertisements.query.all()
-        advts = advertisements.query.filter_by(owner_id=owner_id)
-        advts_oid = advertisements.query.filter_by(owner_id=owner_id).first()
-        recmd_infl.remove(owner_id)
-        main=[]
-        for inf_id in recmd_infl:
-            inf = users.query.filter_by(id=inf_id)
-            for infl in inf:
-                f = infl.fname
-                l = infl.lname
-                c = infl.categories
-                s = infl.smh
-                n = infl.infl_pic
-                abc=[]
-                abc.append(f)
-                abc.append(l)
-                abc.append(c)
-                abc.append(s)
-                abc.append(n)
-                main.append(abc)
-        print(main)
-        try:
-            adv_oid = advts_oid.owner_id
-            if adv_oid:
-                return render_template('advt_dashboard.html',advts=advts, name=name, advts_owner=advts_owner, adv_oid=adv_oid, owner_id=owner_id,main = main)
-            else:
-                return render_template('advt_dashboard.html',advts=advts, name=name, advts_owner=advts_owner, owner_id=owner_id, main = main)
-        except:
-            return render_template('advt_dashboard.html',advts=advts, name=name, advts_owner=advts_owner, owner_id=owner_id, main = main)
+        name = current_user.fname
+        # recmd_infl = model.recm_sys(name)
+        # owner_id = current_user.id
+        # advts_owner= uploaded_files.query.all()
+        # advts = uploaded_files.query.filter_by(owner_id=owner_id)
+        # advts_oid = uploaded_files.query.filter_by(owner_id=owner_id).first()
+        # recmd_infl.remove(owner_id)
+        # main=[]
+        # for inf_id in recmd_infl:
+        #     inf = users.query.filter_by(id=inf_id)
+        #     for infl in inf:
+        #         f = infl.fname
+        #         l = infl.lname
+        #         c = infl.categories
+        #         s = infl.smh
+        #         n = infl.infl_pic
+        #         abc=[]
+        #         abc.append(f)
+        #         abc.append(l)
+        #         abc.append(c)
+        #         abc.append(s)
+        #         abc.append(n)
+        #         main.append(abc)
+        # print(main)
+        # try:
+        #     # adv_oid = advts_oid.owner_id
+        #     if adv_oid:
+        #         return render_template('user_dashboard.html', name=name, advts_owner=advts_owner, adv_oid=adv_oid, owner_id=owner_id,main = main)
+        #     else:
+        #         return render_template('user_dashboard.html',advts=advts, name=name, advts_owner=advts_owner, owner_id=owner_id, main = main)
+        # except:
+        return render_template('user_dashboard.html', name=name)
 
 
 def allowed_file(filename):
     return '.' in filename and \
             filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@views.route('/advt/advertise', methods = ['GET', 'POST'])
+@views.route('/user/upload', methods = ['GET', 'POST'])
 @login_required
-def advt_advertise():
-    if current_user.comp_name == None:
+def user_upload():
+    if current_user.fname == None:
         flash('Please login')
         return redirect(url_for('views.login'))
     else:
@@ -115,42 +133,39 @@ def advt_advertise():
             files = request.files.getlist('prdt_imgs')
             for file in files:
                 if file and allowed_file(file.filename):
-                    comp_name = current_user.comp_name
-                    email = current_user.comp_email
-                    desc = request.form.get('desc')
-                    brand = request.form.get('brand')
-                    deadline = request.form.get('deadline')
-                    prdt_sp = request.form.get('prdt_sp')
-                    age_grp = request.form.get('age_grp')
-                    prdt_imgs = request.files['prdt_imgs']
+                    user_fname = current_user.fname
+                    email = current_user.user_email
+                    mailing_list = request.form.get('mailing_list')
+                    meeting_agenda = request.form.get('meeting_agenda')
+                    mtng_file = request.files['mtng_file']
                     owner_id = current_user.id
                     
-                    filename = secure_filename(prdt_imgs.filename)
-                    mimetype = prdt_imgs.mimetype
+                    filename = secure_filename(mtng_file.filename)
+                    mimetype = mtng_file.mimetype
                     
                     file.save(os.path.join(basedir, app.config['UPLOAD_FOLDER'], filename))
-                    advt = advertisements(owner_id=owner_id, comp_name=comp_name, email=email, desc=desc, brand=brand, deadline=deadline, prdt_sp=prdt_sp,
-                    age_grp=age_grp, name = filename, mimetype=mimetype)
+                    advt = uploaded_files(owner_id=owner_id, fname=user_fname, mailing_list=mailing_list, meeting_agenda=meeting_agenda,
+                    name = filename, mimetype=mimetype)
                     db.session.add(advt)
                     db.session.commit()
                     flash('Advertisement added!', category='success')
-                    return redirect(url_for('views.advt_dashboard'))
+                    return redirect(url_for('views.user_dashboard'))
                 else:
-                    flash('Please upload a valid image file (JPEG/JPG/PNG/GIF).')
-                    user_email=current_user.comp_email
-                    comp_name = current_user.comp_name
-                    return render_template('advt_advertisements.html',user_email=user_email, comp_name=comp_name)
+                    flash('Please upload a valid image file (mp3/mp4/wav).')
+                    user_email=current_user.user_email
+                    user_name = current_user.fname
+                    return render_template('user_upload.html',user_email=user_email, user_name=user_name)
         
-        user_email=current_user.comp_email
-        comp_name = current_user.comp_name
-        return render_template('advt_advertisements.html', user_email=user_email, comp_name=comp_name)
+        user_email=current_user.user_email
+        user_name = current_user.fname
+        return render_template('user_upload.html', user_email=user_email, user_name=user_name)
 
 @views.route('/advt/update_advertise/<int:id>', methods = ['GET', 'POST'])
 @login_required
 def advt_update(id):
-    name_to_update = advertisements.query.filter(advertisements.id==id).first()
-    advt = advertisements.query.filter_by(id=id).first()
-    advt_name_update = advertisements.query.filter_by(id=id).first()
+    name_to_update = uploaded_files.query.filter(uploaded_files.id==id).first()
+    advt = uploaded_files.query.filter_by(id=id).first()
+    advt_name_update = uploaded_files.query.filter_by(id=id).first()
     files = request.files.getlist('prdt_imgs')
     for file in files:
         if file and allowed_file(file.filename):
@@ -176,145 +191,84 @@ def advt_update(id):
 
     advt_id = id
     user_email = current_user.comp_email
-    advts = advertisements.query.filter_by(id=advt_id).first()
-    return render_template('advt_update_advertisements.html',advt=advt, advts=advts, user_email=user_email, id=advt_id )
+    advts = uploaded_files.query.filter_by(id=advt_id).first()
+    return render_template('advt_update_uploaded_files.html',advt=advt, advts=advts, user_email=user_email, id=advt_id )
 
-@views.route('/advt/delete_advertise/<int:id>')
-@login_required
-def advt_delete(id):
-    advt_to_delete = advertisements.query.get_or_404(id)
-    advta_to_delete = advt_approval.query.filter_by(advt_id=id).first()
-    try:
-        if advt_to_delete:
-            db.session.delete(advt_to_delete)
-            db.session.commit()
-        elif advta_to_delete:
-            db.session.delete(advta_to_delete)
-            db.session.commit()
-        flash('Advertisement deleted successfully!')
-        return redirect(url_for('views.advt_dashboard'))
-    except:
-        flash('some error occured')
-        return redirect(url_for('views.advt_dashboard'))
-
-
-@views.route('/advt/applications/<int:id>', methods = ['GET', 'POST'])
-@login_required
-def advt_apply(id):
-    advt_id = id    
-    apl = advt_approval.query.filter_by(advt_id=advt_id, approved=0).all()        
-    advts = advertisements.query.filter_by(id=advt_id).first()
-    return render_template('advt_applications.html', advt=advts,apl=apl)
+# @views.route('/advt/delete_advertise/<int:id>')
+# @login_required
+# def advt_delete(id):
+#     advt_to_delete = uploaded_files.query.get_or_404(id)
+#     advta_to_delete = advt_approval.query.filter_by(advt_id=id).first()
+#     try:
+#         if advt_to_delete:
+#             db.session.delete(advt_to_delete)
+#             db.session.commit()
+#         elif advta_to_delete:
+#             db.session.delete(advta_to_delete)
+#             db.session.commit()
+#         flash('Advertisement deleted successfully!')
+#         return redirect(url_for('views.advt_dashboard'))
+#     except:
+#         flash('some error occured')
+#         return redirect(url_for('views.advt_dashboard'))
 
 
-@views.route('/advt/approved_applications/<int:id>', methods = ['GET', 'POST'])
-@login_required
-def advt_app_applicants(id):
-    advt_id = id    
-    apl = advt_approval.query.filter_by(advt_id=advt_id, approved=1).all()        
-    advts = advertisements.query.filter_by(id=advt_id).first()
-    return render_template('advt_approved_applicants.html', advt=advts,apl=apl)
+# @views.route('/advt/applications/<int:id>', methods = ['GET', 'POST'])
+# @login_required
+# def advt_apply(id):
+#     advt_id = id    
+#     apl = advt_approval.query.filter_by(advt_id=advt_id, approved=0).all()        
+#     advts = uploaded_files.query.filter_by(id=advt_id).first()
+#     return render_template('advt_applications.html', advt=advts,apl=apl)
 
 
-@views.route('/advt/applications/approve/<int:id>', methods = ['GET', 'POST'])
-@login_required
-def advt_approve(id):
-    advt_apr = advt_approval.query.filter_by(id=id).first()
-    advt_apr.approved=1
-    advt_apr.filter='approved'
-    advta_id = advt_apr.advt_id
-    db.session.commit()
-    flash('Influencer application approved! Hope you have a great collaboartion!')
-    return redirect(url_for('views.advt_apply', id=advta_id))
+# @views.route('/advt/approved_applications/<int:id>', methods = ['GET', 'POST'])
+# @login_required
+# def advt_app_applicants(id):
+#     advt_id = id    
+#     apl = advt_approval.query.filter_by(advt_id=advt_id, approved=1).all()        
+#     advts = uploaded_files.query.filter_by(id=advt_id).first()
+#     return render_template('advt_approved_applicants.html', advt=advts,apl=apl)
 
 
-@views.route('/advt/applications/reject/<int:id>')
-@login_required
-def advt_reject(id):
-    advtr=advt_approval.query.filter_by(id=id)
-    advtr_id=advtr[0].advt_id
-    apply_to_delete = advt_approval.query.get_or_404(id)
-    try:
-        db.session.delete(apply_to_delete)
-        db.session.commit()
-        flash('Application rejected, hope you find a better candidate!')
-        return redirect(url_for('views.advt_apply', id=advtr_id))
-
-    except:
-        flash('some error occured ')
-        return redirect(url_for('views.advt_dashboard'))
-
-@views.route('/advt/advt_details/<int:advt_id>', methods = ['POST', 'GET'])
-@login_required
-def advt_details(advt_id):
-    advt = advertisements.query.filter_by(id=advt_id).first()
-    return render_template('advt_details.html', advt=advt)
+# @views.route('/advt/applications/approve/<int:id>', methods = ['GET', 'POST'])
+# @login_required
+# def advt_approve(id):
+#     advt_apr = advt_approval.query.filter_by(id=id).first()
+#     advt_apr.approved=1
+#     advt_apr.filter='approved'
+#     advta_id = advt_apr.advt_id
+#     db.session.commit()
+#     flash('Influencer application approved! Hope you have a great collaboartion!')
+#     return redirect(url_for('views.advt_apply', id=advta_id))
 
 
-@views.route('/infl/dashboard', methods = ['POST', 'GET'])
-@login_required
-def infl_dashboard():
-    if request.method == 'POST':
-        advt_id = request.form.get("advt_id")
-        owner_id = request.form.get("owner_id")
-        owner_name = request.form.get("owner_name")
-        infl_id = request.form.get("infl_id")
-        infl_fname = request.form.get("infl_fname")
-        infl_lname = request.form.get("infl_lname")
-        infl_smh = request.form.get("infl_smh")
-        infl_email = request.form.get("infl_email")
-        advt_name = request.form.get("advt_name")
-        advt_brand = request.form.get("advt_brand")
-        filter='applied'
-        apply = advt_approval(advt_id = advt_id, advt_name=advt_name, advt_brand=advt_brand, owner_id = owner_id, owner_name=owner_name, infl_id = infl_id, infl_fname=infl_fname, infl_lname=infl_lname, infl_smh=infl_smh, infl_email=infl_email,filter=filter)
-        db.session.add(apply)
-        db.session.commit()
-        name = current_user.fname
-        advts= advertisements.query.all()
-        return render_template('infl_dashboard.html', name=name, advts=advts)
-    else:
-        if current_user.fname == None:
-            flash('Please login')
-            return redirect(url_for('views.login'))
-        else:
-            name = current_user.fname
-            advts= advertisements.query.all()
-            return render_template('infl_dashboard.html', name=name, advts=advts)
+# @views.route('/advt/applications/reject/<int:id>')
+# @login_required
+# def advt_reject(id):
+#     advtr=advt_approval.query.filter_by(id=id)
+#     advtr_id=advtr[0].advt_id
+#     apply_to_delete = advt_approval.query.get_or_404(id)
+#     try:
+#         db.session.delete(apply_to_delete)
+#         db.session.commit()
+#         flash('Application rejected, hope you find a better candidate!')
+#         return redirect(url_for('views.advt_apply', id=advtr_id))
 
+#     except:
+#         flash('some error occured ')
+#         return redirect(url_for('views.advt_dashboard'))
 
-@views.route('/infl/portfolio_details<int:advt_id>', methods = ['POST', 'GET'])
-@login_required
-def portfolio_details(advt_id):
-    advt = advertisements.query.filter_by(id=advt_id).first()
-    return render_template('infl_portfolio.html', advt=advt)
-
-@views.route('/infl/my_profile/portfolio_details/<int:advt_id>', methods = ['POST', 'GET'])
-@login_required
-def my_portfolio_details(advt_id):
-    advtm = advertisements.query.filter(advertisements.id==advt_id).first()
-    return render_template('my_infl_portfolio.html', advt=advtm)
-
-
-@views.route('/infl/my_profile')
-@login_required
-def my_profile():
-    apl = advt_approval.query.all()
-    infl_id=current_user.id
-    advt_apl = advt_approval.query.filter_by(infl_id=infl_id)
-    advta_apl = advt_approval.query.filter_by(infl_id=infl_id).all()
-    user= users.query.filter_by(id=infl_id).first()
-    return render_template('infl_profile.html',advta_apl=advta_apl, apl=apl, advts=advt_apl, user=user, infl_id=infl_id)
-
-
-@views.route('/register')
-def register():
-    return render_template('registration.html')
-
+# @views.route('/advt/advt_details/<int:advt_id>', methods = ['POST', 'GET'])
+# @login_required
+# def advt_details(advt_id):
+#     advt = uploaded_files.query.filter_by(id=advt_id).first()
+#     return render_template('advt_details.html', advt=advt)
 
 @views.route('/adv_regis', methods=['GET', 'POST'])
 def adv_regis():
     if request.method == 'POST':
-        comp_name = request.form.get("comp_name")
+        user_name = request.form.get("user_name")
         acc_handler_name = request.form.get("acc_handler_name")
         acc_handler_desig = request.form.get("acc_handler_desig")
         comp_website = request.form.get("comp_website")
@@ -325,7 +279,8 @@ def adv_regis():
         pswd1 = request.form.get("pswd1")
         acc_handler_gender = request.form["gender"]
         acc_type = 'advt'
-        max_id = db.session.query(users).order_by(users.id.desc()).first()
+        # max_id = db.session.query(users).order_by(users.id.desc()).first()
+        # id = db.session.query(users)
         # print(max_id.id)
         user = users.query.filter_by(comp_email=comp_email).first()
         if user:
@@ -334,7 +289,9 @@ def adv_regis():
         else:
             hashed_password = generate_password_hash(
                 pswd1, method='sha256')
-            adv_regis_user = users(id=max_id.id+1, comp_name=comp_name, acc_handler_name=acc_handler_name,
+            # if 
+            # adv_regis_user = users(id=max_id.id+1, user_name=user_name, acc_handler_name=acc_handler_name,
+            adv_regis_user = users(user_name=user_name, acc_handler_name=acc_handler_name,
             acc_handler_desig=acc_handler_desig, comp_website=comp_website, ph_no=ph_no, comp_email=comp_email,
             ah_email=ah_email, categories=categories,password=hashed_password, acc_handler_gender=acc_handler_gender, acc_type=acc_type)
             db.session.add(adv_regis_user)
