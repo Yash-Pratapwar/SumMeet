@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>AdFluencer</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="../static/img/Logo_1.png" rel="icon">
+    <link href="../static/img/Logo_1.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+    <link href=”https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css” rel=”stylesheet”> 
+    <script src=”https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js”></script> 
+    <script src=”https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js”></script>
+    <script type=”text/javascript” src=”https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js”></script>
+    <link href=”https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css” rel=”stylesheet”>
+    <script src=”https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js”> </script>
+    <!-- Vendor CSS Files -->
+    <link href="../static/vendor/aos/aos.css" rel="stylesheet">
+    <link href="../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="../static/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="../static/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="../static/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="../static/css/style.css" rel="stylesheet">
+
+    <!-- Including jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js">
+    </script>
+
+    <!-- Including Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js">
+    </script>
+
+    <!-- Including validation -->
+    <script type="text/javascript" src="{{url_for('static', filename='js/advt_advertisement.js' )}}"></script>
+</head>
+
+<body>
+    <div class="wrap">
+
+        <!-- ======= Header ======= -->
+        <header id="header" class="d-flex align-items-center">
+            <div class="container d-flex align-items-center justify-content-between">
+
+                <div class="logo">
+                    <h1 class="text-light"><a href="{{url_for('views.user_dashboard')}}"><span>AdFluencer</span></a>
+                    </h1>                    
+                </div>
+
+                <nav id="navbar" class="navbar">
+                    <ul>
+                        <li><a class="nav-link scrollto " href="{{url_for('views.user_dashboard')}}">Home</a></li>
+                        <li><a href="{{url_for('views.logout')}}">Logout</a></li>
+                    </ul>
+                    <i class="bi bi-list mobile-nav-toggle"></i>
+                </nav><!-- .navbar -->
+
+            </div>
+        </header><!-- End Header -->
+    </div>
+
+    <br><br><br>
+    {% for msg in get_flashed_messages() %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{msg}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    
+    <body onload="firstfocus()"></body>
+    <form name='advertisements' enctype=multipart/form-data method="POST" onsubmit="return validate()" >
+        <br>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">User Name</label>
+            <input type="text" class="form-control" name="comp_name" id="exampleFormControlInput1"
+                placeholder="{{ user_name }}" value="{{ user_name }}" disabled>
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Email address</label>
+            <input type="email" class="form-control" name="email" id="exampleFormControlInput1"
+                placeholder="{{ user_email }}" value="{{ user_email }}" disabled>
+        </div>
+        <!-- <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Meeting Date</label>
+            <textarea class="form-control" name="meeting_agenda" id="exampleFormControlTextarea1" rows="3" placeholder="Enter meeting agenda."></textarea>
+        </div> -->
+        <div class="mb-3">
+            <div style="position: relative">
+            <label for="exampleFormControlTextarea1" class="form-label">Meeting Date</label>
+                <!-- Include input field with id so
+                    that we can use it in JavaScript
+                    to set attributes.-->
+                <input class="form-control" type="text" id="datetime" />
+            </div>
+        </div>
+        <script>
+ 
+            // Below code sets format to the
+            // datetimepicker having id as
+            // datetime
+            $('#datetime').datetimepicker({
+                // format: 'hh:mm:ss a'
+                format: 'yyyy-mm-dd hh:mm:ss a'
+
+            });
+        </script>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Meeting Agenda</label>
+            <textarea class="form-control" name="meeting_agenda" id="exampleFormControlTextarea1" rows="3" placeholder="Enter meeting agenda."></textarea>
+        </div>
+        <!-- <div class="form-group">    
+            <label for="exampleFormControlTextarea1" class="form-label">Recipients</label>
+          <div class="input-group input-group-md">
+            <input type="text" id="example_emailBS" name="example_emailBS" class="form-control" value='["damian.raffa@mobileum.com","user@mobileum.com"]'>
+            <span class="input-group-btn">
+              <button class="btn red" type="button"><i class="fa fa-calendar-plus-o"></i></button>
+             </span>
+          </div>
+        </div> -->
+        <!-- <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Recipients</label>
+            <textarea class="form-control" name="meeting_agenda" id="exampleFormControlTextarea1" rows="3" placeholder="Enter meeting agenda."></textarea>
+        </div> -->
+        <div class="mb-3">
+            <div class="heading ">
+                <label for="exampleFormControlTextarea1" class="form-label">Recipients</label>
+                <!-- <p>Type <kbd>,</kbd> or hit <kbd>space</kbd> after you enter an email</p> -->
+            </div>
+            <div id="contact-us" class="form ">
+                <div id="emailsList">
+                    <ul>
+                    </ul>
+                </div>
+                <div id="contactForm">
+                    <p data-error="email" class="errors"></p>
+                    <input class="form-control" value="" placeholder="Type ',' or hit 'space' after you enter an email" type="text" id="mailing_list">
+                </div>
+                <p id="emailJson"></p>
+            </div>
+        </div>
+            <script>class AddEmails {
+                constructor() {
+                   this.emailInput = document.getElementById("mailing_list");
+                   this.emailListContainer = document.querySelector("div#emailsList ul");
+                }
+                // some regex copied from internet
+                isValidEmail(val) {
+                   let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                   return re.test(val);
+                }
+            
+                getEmails() {
+                   var emails = [];
+                   document.querySelectorAll("div#emailsList ul li").forEach((ele) => {
+                      emails.push(ele.innerHTML.replace(/ /g, ""));
+                   });
+            
+                   console.log(JSON.stringify(emails));
+                }
+            
+                init() {
+                   this.emailInput.onkeyup = (e) => {
+            
+                      if (e.keyCode == 0 || e.keyCode == 32 || e.keyCode == 13 || e.keyCode == 188) {
+            
+                         let val = e.target.value.trim().replace(/ /g, "").replace(/,/g, "");
+            
+                         if (this.isValidEmail(val)) {
+                            console.log(val);
+            
+                            let li = document.createElement('li');
+                            li.innerHTML = val;
+                            this.emailListContainer.appendChild(li);
+                            this.emailInput.value = "";
+            
+                            // removing email from the list
+                            li.addEventListener("click", function (e) {
+            
+                               e.target.parentNode.removeChild(e.target);
+                            });
+            
+                            this.getEmails();
+            
+                            return;
+                         }
+                      }
+                   }
+            
+            
+                }
+            
+            
+             }
+            
+             var addEmails = new AddEmails();
+             addEmails.init();
+            
+            //  var demoEmails = "Type <kbd>,</kbd> or hit <kbd>space</kbd> after you enter an email";
+            
+            
+            //  var myVar = setInterval(myTimer, 200);
+            
+            //  var i = 0;
+            
+            //  function myTimer() {
+            
+            //     if (i == (demoEmails.length)) {
+            //        myStopFunction();
+            //        return;
+            //     }
+            
+            //     document.getElementById("email").value = document.getElementById("email").value + demoEmails[i];
+            //     i++;
+            //  }
+            
+             function myStopFunction() {
+                clearInterval(myVar);
+                document.getElementById("mailing_list").dispatchEvent(new KeyboardEvent('keyup', { 'key': 'enter' }));
+             }
+            </script>
+        <div class="mb-3">
+            <label for="formFileMultiple" class="form-label">Upload meeting audio/video</label>
+            <input class="form-control" type="file" name="mtng_file" id="formFileMultiple">
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Save and Upload</button>
+        </div>
+    </form>
+    <br>
+    <style>
+        form {
+            padding-left: 50px;
+            padding-right: 50px;
+        }
+    </style>
+    <!-- ======= Footer ======= -->
+    <footer id="footer">
+
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-6 footer-contact">
+                        <h3>AdFluencer</h3>
+                        <p>
+                            1st Floor, Lok Centre Premises Co-op Society Ltd Above ICICI Bank, Marol Maroshi Rd, Marol,
+                            Andheri East, Mumbai <br><br>
+                            <strong>Phone:</strong> +91 858846718<br>
+                            <strong>Email:</strong> contact@adfluencer.com<br>
+                        </p>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <h4>Useful Links</h4>
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <h4>Our Social Networks</h4>
+
+                        <div class="social-links mt-3">
+                            <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                            <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                            <a href="#" class="github"><i class="bx bxl-github"></i></a>
+                            <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container py-4">
+            <div class="copyright">
+                &copy; Copyright <strong><span>AdFluencer</span></strong>. All Rights Reserved
+            </div>
+        </div>
+    </footer><!-- End Footer -->
+
+    </div>
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="{{url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{url_for('static', filename='vendor/aos/aos.js')}}"></script>
+    <script src="{{url_for('static', filename='vendor/glightbox/js/glightbox.min.js')}}"></script>
+    <script src="{{url_for('static', filename='vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
+    <script src="{{url_for('static', filename='vendor/php-email-form/validate.js')}}"></script>
+    <script src="{{url_for('static', filename='vendor/swiper/swiper-bundle.min.js')}}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
+
+</body>
+
+</html>
