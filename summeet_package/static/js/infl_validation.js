@@ -12,12 +12,8 @@ function validate(){
     var fnam = document.registration.fname;
     var lname = document.registration.lname.value;
     var lnam = document.registration.lname;
-    var smh = document.registration.smh.value;
-    var smhf = document.registration.smh;
-    var ph_no = document.registration.ph_no.value;
-    var ph_nof = document.registration.ph_no;
-    var inf_email = document.registration.inf_email.value;
-    var inf_emailf = document.registration.inf_email;
+    var user_email = document.registration.user_email.value;
+    var user_emailf = document.registration.user_email;
     var pswd1 = document.registration.pswd1.value;
     var pswd1f = document.registration.pswd1;
     var pswd2 = document.registration.pswd2.value;
@@ -25,10 +21,6 @@ function validate(){
     var age = document.registration.age.value;
     var agef = document.registration.age;
     var getSelectedValue = document.querySelector('input[name="gender"]:checked');
-    var inf_categories = document.registration.inf_categories.value;
-    var inf_categoriesf = document.registration.inf_categories;
-
-
 
     if (fname == "" || fname == null) {
         alert("First name should not be empty");
@@ -53,51 +45,15 @@ function validate(){
         return false;
     }
     
-    else if (smh == "" || smh == null) {
-        alert("Please enter your social media handle");
-        smhf.focus();
-        return false;
-    }
-    
-    else if (!smh.match(res)) {
-        alert("Please enter a valid URL, URL format: https://sample.com");
-        smhf.focus();
-        return false;
-    }
-    
-    else if (ph_no == "" || ph_no == null) {
-        alert("Please enter your phone number");
-        ph_nof.focus();
-        return false;
-    }
-    
-    else if (!ph_no.match(phoneno)) {
-        alert("Please enter a valid 10 digit phone number, format: 87XXXXXXXX");
-        ph_nof.focus();
-        return false;
-    }
-    
-    else if (inf_email == "" || inf_email == null) {
+    else if (user_email == "" || user_email == null) {
         alert("Please enter your E-mail ID");
-        inf_emailf.focus();
+        user_emailf.focus();
         return false;
     }
     
-    else if (!inf_email.match(mail)) {
+    else if (!user_email.match(mail)) {
         alert("Please enter a valid E-mail ID, format: xyz@gmail.com");
-        inf_emailf.focus();
-        return false;
-    }
-
-    else if (inf_categories == "" || inf_categories == null) {
-        alert("Categories should not be empty");
-        inf_categoriesf.focus();
-        return false;
-    }
-    
-    else if (!inf_categories.match(lettersf)) {
-        alert("Categories should contain only letters");
-        inf_categoriesf.focus();
+        user_emailf.focus();
         return false;
     }
 
