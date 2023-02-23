@@ -130,7 +130,7 @@ def user_upload():
         return redirect(url_for('views.login'))
     else:
         if request.method == 'POST':
-            files = request.files.getlist('prdt_imgs')
+            files = request.files.getlist('mtng_file')
             for file in files:
                 if file and allowed_file(file.filename):
                     user_fname = current_user.fname
@@ -144,17 +144,17 @@ def user_upload():
                     mimetype = mtng_file.mimetype
                     
                     file.save(os.path.join(basedir, app.config['UPLOAD_FOLDER'], filename))
-                    advt = uploaded_files(owner_id=owner_id, fname=user_fname, mailing_list=mailing_list, meeting_agenda=meeting_agenda,
+                    advt = uploaded_files(owner_id=owner_id, user_fname=user_fname, mailing_list=mailing_list, meeting_agenda=meeting_agenda,
                     name = filename, mimetype=mimetype)
                     db.session.add(advt)
                     db.session.commit()
-                    flash('Advertisement added!', category='success')
+                    flash('File uploaded!', category='success')
                     return redirect(url_for('views.user_dashboard'))
                 else:
-                    flash('Please upload a valid image file (mp3/mp4/wav).')
+                    flash('Please upload a valid file (mp3/mp4/wav).')
                     user_email=current_user.user_email
                     user_name = current_user.fname
-                    return render_template('user_upload.html',user_email=user_email, user_name=user_name)
+                    return render_template('user_upload.html',user_email=user_email, user_name=user_fname)
         
         user_email=current_user.user_email
         user_name = current_user.fname

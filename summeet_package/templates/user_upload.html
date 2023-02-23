@@ -91,30 +91,29 @@
             <input type="email" class="form-control" name="email" id="exampleFormControlInput1"
                 placeholder="{{ user_email }}" value="{{ user_email }}" disabled>
         </div>
+        <label for="exampleFormControlInput1" class="form-label">Meeting Date</label>
+        <input type="datetime-local" class="form-control" id="exampleFormControlInput1" name="meeting_date" placeholder="mm/dd/yyy">
         <!-- <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Meeting Date</label>
             <textarea class="form-control" name="meeting_agenda" id="exampleFormControlTextarea1" rows="3" placeholder="Enter meeting agenda."></textarea>
         </div> -->
-        <div class="mb-3">
+        <!-- <div class="mb-3">
             <div style="position: relative">
             <label for="exampleFormControlTextarea1" class="form-label">Meeting Date</label>
-                <!-- Include input field with id so
-                    that we can use it in JavaScript
-                    to set attributes.-->
-                <input class="form-control" type="text" id="datetime" />
+                <input class="form-control" type="datetime-local" id="meeting_date" />
             </div>
-        </div>
-        <script>
+        </div> -->
+        <!-- <script>
  
             // Below code sets format to the
             // datetimepicker having id as
             // datetime
-            $('#datetime').datetimepicker({
+            $('#meeting_date').datetimepicker({
                 // format: 'hh:mm:ss a'
                 format: 'yyyy-mm-dd hh:mm:ss a'
 
             });
-        </script>
+        </script> -->
         <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Meeting Agenda</label>
             <textarea class="form-control" name="meeting_agenda" id="exampleFormControlTextarea1" rows="3" placeholder="Enter meeting agenda."></textarea>
@@ -135,7 +134,6 @@
         <div class="mb-3">
             <div class="heading ">
                 <label for="exampleFormControlTextarea1" class="form-label">Recipients</label>
-                <!-- <p>Type <kbd>,</kbd> or hit <kbd>space</kbd> after you enter an email</p> -->
             </div>
             <div id="contact-us" class="form ">
                 <div id="emailsList">
@@ -144,7 +142,7 @@
                 </div>
                 <div id="contactForm">
                     <p data-error="email" class="errors"></p>
-                    <input class="form-control" value="" placeholder="Type ',' or hit 'space' after you enter an email" type="text" id="mailing_list">
+                    <input class="form-control" value="" placeholder="Type ',' or hit 'space' after you enter an email" type="text" name = 'mailing_list' id="mailing_list">
                 </div>
                 <p id="emailJson"></p>
             </div>
@@ -213,16 +211,16 @@
             
             //  var i = 0;
             
-            //  function myTimer() {
+             function myTimer() {
             
-            //     if (i == (demoEmails.length)) {
-            //        myStopFunction();
-            //        return;
-            //     }
+                if (i == (demoEmails.length)) {
+                   myStopFunction();
+                   return;
+                }
             
-            //     document.getElementById("email").value = document.getElementById("email").value + demoEmails[i];
-            //     i++;
-            //  }
+                document.getElementById("email").value = document.getElementById("email").value + demoEmails[i];
+                i++;
+             }
             
              function myStopFunction() {
                 clearInterval(myVar);
