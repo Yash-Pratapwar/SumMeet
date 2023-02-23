@@ -24,6 +24,7 @@ class uploaded_files(db.Model, UserMixin):
     meeting_agenda = db.Column(db.String(1000))
     meeting_date = db.Column(db.Integer)
     mimetype = db.Column(db.Text, nullable = False)
+    name = db.Column(db.Text, nullable = False)
     date_uploaded = db.Column(db.DateTime, default = datetime.utcnow)
 
 # class advt_approval(db.Model, UserMixin):
