@@ -11,7 +11,7 @@ UPLOAD_FOLDER = 'static/uploads/'
 
 def create_app():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://postgres:Pkmon_postgres@localhost/summeet' #Keep the database name as 'summeet' only to make our life easy, edit this according to your username and password
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://postgres:postgres@localhost/summeet' #Keep the database name as 'summeet' only to make our life easy, edit this according to your username and password
     # app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://yash:1234@localhost/summeet' #use this line to edit and comment out the above line
     #please refer this website: https://towardsdatascience.com/sending-data-from-a-flask-app-to-postgresql-database-889304964bf2
     '''
