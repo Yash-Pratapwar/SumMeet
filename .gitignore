@@ -15,3 +15,6 @@ summeet_package/static/uploads/sample_video_seg1.mp3
 summeet_package/static/uploads/The_Internet_Said_So_EP158_seg1.mp3
 videos/videoplayback.mp3
 videos/videoplayback.mp4
+summeet_package/__init__.py
+summeet_package/__pycache__/__init__.cpython-310.pyc
+summeet_package/__pycache__/__init__.cpython-310.pyc
