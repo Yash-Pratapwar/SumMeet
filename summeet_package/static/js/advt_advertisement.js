@@ -9,6 +9,7 @@ function validate() {
     var meeting_agenda = document.advertisements.meeting_agenda.value;
     var meeting_agendaf = document.advertisements.meeting_agenda;
     var mailing_list = document.advertisements.mailing_list.value;
+    var mailing_list = document.advertisements.mailing_list.value;
     var mailing_listf = document.advertisements.mailing_list;
     var mtng_file = document.advertisements.mtng_file.value;
     var mtng_filef = document.advertisements.mtng_file;
@@ -28,7 +29,7 @@ function validate() {
         return false;
     }
 
-    else if (mailing_list == "" || mailing_list == null) {
+    else if ($('#emailsList ul').length == 0) {
         alert("Please enter receipients.");
         mailing_listf.focus();
         return false;

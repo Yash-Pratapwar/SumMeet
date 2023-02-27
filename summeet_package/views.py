@@ -151,9 +151,9 @@ def user_upload():
                     flash('File uploaded!', category='success')
                     return redirect(url_for('views.user_dashboard'))
                 else:
-                    flash('Please upload a valid file (mp3/mp4/wav).')
+                    flash('Please enter all the details.')
                     user_email=current_user.user_email
-                    user_name = current_user.fname
+                    user_fname = current_user.fname
                     return render_template('user_upload.html',user_email=user_email, user_name=user_fname)
         
         user_email=current_user.user_email
