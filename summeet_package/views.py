@@ -38,7 +38,7 @@ def register():
         user = users.query.filter_by(user_email=user_email).first()
         if user:
             flash('Email already exists.', category='error')
-            return render_template('user-registration.html')
+            return render_template('user_registration.html')
         else:
             hashed_password = generate_password_hash(
                 pswd1, method='sha256')
@@ -49,7 +49,7 @@ def register():
             db.session.commit()
             flash('Account created! Please login', category='success')
             return redirect(url_for('views.login'))
-    return render_template('user-registration.html')
+    return render_template('user_registration.html')
 
 @views.route('/login', methods=['GET', 'POST'])
 def login():

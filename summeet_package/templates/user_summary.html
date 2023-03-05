@@ -78,20 +78,20 @@
             <input type="email" class="form-control" name="email" id="exampleFormControlInput1"
                 placeholder="{{ user_email }}" value="{{ user_email }}" disabled>
         </div>
-        
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Meeting Name</label>
+            <input type="text" class="form-control" name="meeting_name" id="exampleFormControlInput1"
+                placeholder="{{ meeting_name }}" value="{{ meeting_name }}">
+        </div>
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Mailing List</label>
-            <input type="email" class="form-control" name="mailing_list" id="exampleFormControlInput1"
+            <input type="text" class="form-control" name="mailing_list" id="exampleFormControlInput1"
                 placeholder="{{ email_list.mailing_list }}" value="{% for value in email_list.mailing_list: %}
                 {{ value }}
                 {% endfor %}" >
         </div>
-        <div class="mb-3">
-            <label for="formFileMultiple" class="form-label">Upload meeting audio/video</label>
-            <input class="form-control" type="file" name="mtng_file" id="formFileMultiple">
-        </div>
         <div class="col-12">
-            <button type="submit" class="btn btn-primary">Save and Upload</button>
+            <button type="submit" class="btn btn-primary">Save and summarize</button>
         </div>
     </form>
     <br>

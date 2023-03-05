@@ -44,6 +44,16 @@
 
     <!-- Including validation -->
     <script type="text/javascript" src="{{url_for('static', filename='js/advt_advertisement.js' )}}"></script>
+
+    <!-- Include Bootstrap DateTimePicker CDN -->
+	<link
+    href=
+"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css"
+    rel="stylesheet">
+
+<script src=
+"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js">
+    </script>
 </head>
 
 <body>
@@ -91,29 +101,14 @@
             <input type="email" class="form-control" name="email" id="exampleFormControlInput1"
                 placeholder="{{ user_email }}" value="{{ user_email }}" disabled>
         </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Meeting Name</label>
+            <input type="text" class="form-control" name="meeting_name" id="exampleFormControlInput1"
+                placeholder="Enter meeting name">
+        </div>
         <label for="exampleFormControlInput1" class="form-label">Meeting Date</label>
-        <input type="datetime-local" class="form-control" id="exampleFormControlInput1" name="meeting_date" placeholder="mm/dd/yyy">
-        <!-- <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Meeting Date</label>
-            <textarea class="form-control" name="meeting_agenda" id="exampleFormControlTextarea1" rows="3" placeholder="Enter meeting agenda."></textarea>
-        </div> -->
-        <!-- <div class="mb-3">
-            <div style="position: relative">
-            <label for="exampleFormControlTextarea1" class="form-label">Meeting Date</label>
-                <input class="form-control" type="datetime-local" id="meeting_date" />
-            </div>
-        </div> -->
-        <!-- <script>
- 
-            // Below code sets format to the
-            // datetimepicker having id as
-            // datetime
-            $('#meeting_date').datetimepicker({
-                // format: 'hh:mm:ss a'
-                format: 'yyyy-mm-dd hh:mm:ss a'
-
-            });
-        </script> -->
+        <input type="datetime-local" class="form-control" id="datetime" name="meeting_date" placeholder="mm/dd/yyy">
+        
         <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Meeting Agenda</label>
             <textarea class="form-control" name="meeting_agenda" id="exampleFormControlTextarea1" rows="3" placeholder="Enter meeting agenda."></textarea>
