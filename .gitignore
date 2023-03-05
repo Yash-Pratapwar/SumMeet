@@ -1,9 +1,13 @@
+summeet_package/__pycache__/models.cpython-38.pyc
+summeet_package/__pycache__/__init__.cpython-38.pyc
+summeet_package/__pycache__/views.cpython-38.pyc
 audio_files/hindi_eng_sample_seg1.mp3
 audio_files/gettysburg_johng_librivox.m4b
 audio_files/hindi_eng_sample.mp3
 audio_files/result_seg1.wav
 audio_files/The_Internet_Said_So_EP158_seg1.mp3
 audio_files/The_Internet_Said_So_EP158_seg1.wav
+.gitignore
 audio_files/The_Internet_Said_So_EP158.mp3
 audio_files/videoplayback_seg1.mp3
 audio_files/videoplayback.wav
@@ -11,3 +15,6 @@ summeet_package/static/uploads/sample_video_seg1.mp3
 summeet_package/static/uploads/The_Internet_Said_So_EP158_seg1.mp3
 videos/videoplayback.mp3
 videos/videoplayback.mp4
+summeet_package/__init__.py
+summeet_package/__pycache__/__init__.cpython-310.pyc
+summeet_package/__pycache__/__init__.cpython-310.pyc

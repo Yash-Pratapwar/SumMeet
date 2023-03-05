@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>AdFluencer</title>
+    <title>SumMeet</title>
     <meta content="" name="description" />
     <meta content="" name="keywords" />
 
@@ -70,16 +70,16 @@
             <div class="container d-flex align-items-center justify-content-between">
                 <div class="logo">
                     <h1 class="text-light">
-                        <a href="{{url_for('views.home')}}"><span>AdFluencer</span></a>
+                        <a href="{{url_for('views.home')}}"><span>SumMeet</span></a>
                     </h1>
                 </div>
 
                 <nav id="navbar" class="navbar">
                     <ul>
                         <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-                        <li><a class="nav-link scrollto" href="#portfolio">Your Advertisements</a></li>
+                        <!-- <li><a class="nav-link scrollto" href="#portfolio">Your Advertisements</a></li> -->
                         <li><a class="nav-link scrollto" href="#cta">Advertise</a></li>
-                        <li><a class="nav-link scrollto" href="#team">Influencers</a></li>
+                        <!-- <li><a class="nav-link scrollto" href="#team">Influencers</a></li> -->
                         <li><a class="nav-link scrollto" href="#faq">FAQ</a></li>
                         <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
                         <li><a href="{{url_for('views.logout')}}">Logout</a></li>
@@ -98,7 +98,7 @@
             <section id="portfolio" class="portfolio section-bg">
                 <div class="container">
 
-                    <div class="section-title" data-aos="fade-down">
+                    <!-- <div class="section-title" data-aos="fade-down">
                         <span>Your Advertisements</span>
                         <h2>Your Advertisements</h2>
                         {% if adv_oid != owner_id %}
@@ -106,7 +106,7 @@
                         {% else %}
                         <p>This is how your posted advertisements will be visible to Influencers</p>
                         {% endif %}
-                    </div>
+                    </div> -->
                     {% for adv in advts|batch(3) %}
                     <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="300">
                         {% for advt in adv %}
@@ -136,57 +136,18 @@
             <section id="cta" class="cta">
                 <div class="container">
                     <div class="text-center" data-aos="zoom-in">
-                        <h3>Advertise</h3>
+                        <h3>Proceed</h3>
                         <p>
-                            Advertise your products...
+                            One step to summarize...
                         </p>
-                        <a class="cta-btn" href="{{url_for('views.user_upload')}}">Advertise</a>
+                        <a class="cta-btn" href="{{url_for('views.user_upload')}}">Enter</a>
                     </div>
                 </div>
             </section>
             <!-- End Cta Section -->
 
             <!-- ======= influencer Section ======= -->
-            <section id="team" class="team">
-                <div class="container">
-                    <div class="section-title" data-aos="fade-down">
-                        <span>Recommended Influencers</span>
-                        <h2>Recommended Influencers</h2>
-                    </div>
-
-                    {% for inf in main|batch(4) %}
-                    <div class="row">
-                        {% for infl in inf %}
-                        <div class="col-xl-3 col-lg-4 col-md-6">
-                            <div class="member" data-aos="fade-up" data-aos-delay="100">
-                                {% if infl[4] %}
-                                <img src="{{ url_for('static', filename = 'uploads/'+infl[4]) }}" class="img-fluid"
-                                    alt="{{ infl[4]}}">
-                                {% else %}
-                                <img src="../static/img/team/Team-1.png" class="img-fluid" alt="" />
-                                {% endif %}
-                                <div class="member-info">
-                                    <div class="member-info-content">
-                                        <h4>{{ infl[0] }}{{" " }}{{ infl[1] }} </h4>
-                                        <!-- <span>Instagram-572k followers</span> -->
-                                        <span>{{ infl[2] }}</span>
-                                    </div>
-
-                                    <div class="social">
-                                        <a href="{{infl[3]}}"><i class="bi bi-instagram"></i></a>
-                                        <!-- <a href="https://www.instagram.com/just_neel_things/"><i
-                                                class="bi bi-instagram"></i></a> -->
-                                    </div>
-                                </div>
-                            </div>
-                            <br>
-                        </div>
-                        <br>
-                        {% endfor %}
-                    </div>
-                    {% endfor %}
-                    <br /><br /><br />
-            </section>
+            <!-- / -->
             <!-- 
                     <div class="row">
                         <div class="col-xl-3 col-lg-4 col-md-6">
@@ -369,25 +330,25 @@
                             <li data-aos="fade-up">
                                 <i class="bx bx-help-circle icon-help"></i>
                                 <a data-bs-toggle="collapse" class="collapse" data-bs-target="#faq-list-1">
-                                    How to Advertise Multiple Advertisements?
+                                    How to get summary now?
                                     <i class="bx bx-chevron-down icon-show"></i><i
                                         class="bx bx-chevron-up icon-close"></i></a>
                                 <div id="faq-list-1" class="collapse show" data-bs-parent=".faq-list">
                                     <p>
-                                        Advertisers can post there advertisements through Advertise tab in navigation
+                                        Click on the enter button after login ,to add details.
                                         bar. </p>
                                 </div>
                             </li>
 
                             <li data-aos="fade-up" data-aos-delay="100">
                                 <i class="bx bx-help-circle icon-help"></i>
-                                <a data-bs-toggle="collapse" data-bs-target="#faq-list-2" class="collapsed">Where to
-                                    mention details of the product? <i class="bx bx-chevron-down icon-show"></i><i
+                                <a data-bs-toggle="collapse" data-bs-target="#faq-list-2" class="collapsed">
+                                    Where to Enter email id's of recepients?
+                            <i class="bx bx-chevron-down icon-show"></i><i
                                         class="bx bx-chevron-up icon-close"></i></a>
                                 <div id="faq-list-2" class="collapse" data-bs-parent=".faq-list">
                                     <p>
-                                        While entering the product under Advertise tab you can Enter the product
-                                        details, duration to create advertisement.
+                                        On clicking on Enter button  You can add details about recepients.
                                     </p>
                                 </div>
                             </li>
@@ -420,7 +381,7 @@
                             <div class="info-box">
                                 <i class="bx bx-envelope"></i>
                                 <h3>Email Us</h3>
-                                <p>AdfluencerAd.com<br>FluentlyAd.com</p>
+                                <p>SumMeet.com<br>SumMeetit.com</p>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="300">
@@ -446,7 +407,7 @@
                     <div class="row">
 
                         <div class="col-lg-3 col-md-6 footer-contact">
-                            <h3>AdFluencer</h3>
+                            <h3>SumMeet</h3>
                             <p>
                                 1st Floor, Lok Centre Premises Co-op Society Ltd Above ICICI Bank, Marol Maroshi Rd,
                                 Marol, Andheri East, Mumbai <br><br>
@@ -486,7 +447,7 @@
 
             <div class="container py-4">
                 <div class="copyright">
-                    &copy; Copyright <strong><span>AdFluencer</span></strong>. All Rights Reserved
+                    &copy; Copyright <strong><span>SumMeet</span></strong>. All Rights Reserved
                 </div>
             </div>
         </footer><!-- End Footer -->

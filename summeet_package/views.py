@@ -38,7 +38,7 @@ def register():
         user = users.query.filter_by(user_email=user_email).first()
         if user:
             flash('Email already exists.', category='error')
-            return render_template('user-registration.html')
+            return render_template('user_registration.html')
         else:
             hashed_password = generate_password_hash(
                 pswd1, method='sha256')
@@ -49,7 +49,7 @@ def register():
             db.session.commit()
             flash('Account created! Please login', category='success')
             return redirect(url_for('views.login'))
-    return render_template('user-registration.html')
+    return render_template('user_registration.html')
 
 @views.route('/login', methods=['GET', 'POST'])
 def login():
@@ -135,7 +135,9 @@ def user_upload():
                 if file and allowed_file(file.filename):
                     user_fname = current_user.fname
                     email = current_user.user_email
-                    mailing_list = request.form.get('mailing_list')
+                    meeting_date = request.form.get('meeting_date')
+                    email_list = request.form.get('mailing_list')
+                    mailing_list = email_list.split(',')
                     meeting_agenda = request.form.get('meeting_agenda')
                     mtng_file = request.files['mtng_file']
                     owner_id = current_user.id
@@ -144,12 +146,11 @@ def user_upload():
                     mimetype = mtng_file.mimetype
                     
                     file.save(os.path.join(basedir, app.config['UPLOAD_FOLDER'], filename))
-                    advt = uploaded_files(owner_id=owner_id, user_fname=user_fname, mailing_list=mailing_list, meeting_agenda=meeting_agenda,
-                    name = filename, mimetype=mimetype)
+                    advt = uploaded_files(owner_id=owner_id, user_fname=user_fname, mailing_list=mailing_list, meeting_agenda=meeting_agenda, meeting_date=meeting_date, name = filename, mimetype=mimetype)
                     db.session.add(advt)
                     db.session.commit()
                     flash('File uploaded!', category='success')
-                    return redirect(url_for('views.user_dashboard'))
+                    return redirect(url_for('views.user_summary'))
                 else:
                     flash('Please enter all the details.')
                     user_email=current_user.user_email
@@ -159,6 +160,21 @@ def user_upload():
         user_email=current_user.user_email
         user_name = current_user.fname
         return render_template('user_upload.html', user_email=user_email, user_name=user_name)
+
+@views.route('/user/upload/summary', methods = ['GET', 'POST'])
+@login_required
+def user_summary():
+    if current_user.fname == None:
+        flash('Please login')
+        return redirect(url_for('views.login'))
+    else:
+        # advts = advertisements.query.filter_by(owner_id=owner_id)
+        user_fname = current_user.fname
+        owner_id = current_user.id
+        user_email=current_user.user_email
+        email_list = uploaded_files.query.filter_by(owner_id=owner_id).first()
+        print(email_list.mailing_list)
+        return render_template('user_summary.html', user_email=user_email, email_list=email_list, user_name=user_fname)
 
 @views.route('/advt/update_advertise/<int:id>', methods = ['GET', 'POST'])
 @login_required
