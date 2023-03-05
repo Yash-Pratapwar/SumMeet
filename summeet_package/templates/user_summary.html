@@ -66,6 +66,8 @@
     {% endfor %}
     
     <body onload="firstfocus()"></body>
+    <div id="loading"></div>
+    <div id="content"></div>
     <form name='advertisements' enctype=multipart/form-data method="POST" onsubmit="return validate()" >
         <br>
         <div class="mb-3">
@@ -81,19 +83,34 @@
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Meeting Name</label>
             <input type="text" class="form-control" name="meeting_name" id="exampleFormControlInput1"
-                placeholder="{{ meeting_name }}" value="{{ meeting_name }}">
+                placeholder="{{ up_file.meeting_name }}" value="{{ up_file.meeting_name }}" disabled>
         </div>
+        
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Meeting Summary</label>
+            <textarea class="form-control" name="meeting_agenda" id="exampleFormControlInput1" rows="3" placeholder="{{ summ_text }}" value="{{ summ_text }}" disabled></textarea>
+        </div>
+        
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Mailing List</label>
             <input type="text" class="form-control" name="mailing_list" id="exampleFormControlInput1"
-                placeholder="{{ email_list.mailing_list }}" value="{% for value in email_list.mailing_list: %}
-                {{ value }}
-                {% endfor %}" >
+                placeholder="{{ up_file.mailing_list }}" value="{% for value in up_file.mailing_list: %}
+                {{- value -}}
+                {% endfor %}" disabled>
         </div>
         <div class="col-12">
-            <button type="submit" class="btn btn-primary">Save and summarize</button>
+        <a href="{{url_for('views.user_dashboard')}}">
+            <button type="button" class="btn btn-primary">Dashboard</button>
+        </a>
         </div>
+        <script type="text/javascript">// <![CDATA[
+            function loading(){
+                $("#loading").show();
+                $("#content").hide();       
+            }
+    // ]]></script>
     </form>
+    </div>
     <br>
     <style>
         form {

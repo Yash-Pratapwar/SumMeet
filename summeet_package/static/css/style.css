@@ -1640,3 +1640,11 @@ section {
   text-align: center;
   font-size: 13px;
 }
+
+div#loading {
+  width: 35px;
+  height: 35px;
+  display: none;
+  background: url(../loadingimage.gif) no-repeat;
+  cursor: wait;
+  }

@@ -1,14 +1,12 @@
-import time
-start_time = time.time()
 import whisper
 
-model = whisper.load_model("medium")
+def text_transcript(file_name):
+# file_name = 'short'
+    model = whisper.load_model("medium")
+    # result = model.transcribe("summeet_package/audio_files_uploaded/short.mp3", fp16=False, language = 'Hindi', task='translate')
+    result = model.transcribe('summeet_package/audio_files_uploaded/'+file_name+'.mp3', fp16=False, language = 'Hindi', task='translate')
+    text = result["text"]
+    print(result["text"])
+    with open('summeet_package/transcripted_files/'+file_name+'.txt', 'w') as file:
+            file.writelines(text)
 
-result = model.transcribe("audio_files/The_Internet_Said_So_EP158_seg1.mp3", fp16=False, language = 'Hindi', task='translate')
-# result = model.transcribe("audio_files/sample_video_seg1.mp3")
-text = result["text"]
-print(result["text"])
-with open('transcripted_files/transcripted_file.txt', 'w') as file:
-        file.writelines(text)
-print("Process finished --- %s seconds ---" % (time.time() - start_time))
-# print(result)

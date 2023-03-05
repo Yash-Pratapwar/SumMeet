@@ -1,7 +1,7 @@
 from pydub import AudioSegment
 
 #importing file from location by giving its path
-sound = AudioSegment.from_file("audio_files/hindi_eng_sample.mp3")
+sound = AudioSegment.from_file("../audio_files/The_Internet_Said_So_EP158_seg1.mp3")
 
 #duration calculation function
 sound.duration_seconds == (len(sound) / 1000.0)
@@ -20,8 +20,8 @@ print(type(duration))
 StrtMin = 0
 StrtSec = 0
 
-EndMin = 3
-EndSec = 0
+EndMin = 0
+EndSec = 30
 
 # Time to milliseconds conversion
 StrtTime = StrtMin*60*1000+StrtSec*1000
@@ -31,7 +31,7 @@ print(StrtTime, EndTime)
 extract = sound[StrtTime:EndTime]
 
 # Saving file in required location
-extract.export("audio_files/hindi_eng_sample_seg1.mp3", format="mp3")
+extract.export("../audio_files/short.mp3", format="mp3")
 
 # new file portion.mp3 is saved at required location
 
