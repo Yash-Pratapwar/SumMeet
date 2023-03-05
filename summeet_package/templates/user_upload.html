@@ -89,6 +89,8 @@
     {% endfor %}
     
     <body onload="firstfocus()"></body>
+    <div id="loading"></div>
+    <div id="content"></div>
     <form name='advertisements' enctype=multipart/form-data method="POST" onsubmit="return validate()" >
         <br>
         <div class="mb-3">
@@ -106,132 +108,20 @@
             <input type="text" class="form-control" name="meeting_name" id="exampleFormControlInput1"
                 placeholder="Enter meeting name">
         </div>
+        <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Meeting Date</label>
         <input type="datetime-local" class="form-control" id="datetime" name="meeting_date" placeholder="mm/dd/yyy">
-        
+        </div>
         <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Meeting Agenda</label>
             <textarea class="form-control" name="meeting_agenda" id="exampleFormControlTextarea1" rows="3" placeholder="Enter meeting agenda."></textarea>
         </div>
 
         <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Recipients</label>
+            <label for="exampleFormControlTextarea1" class="form-label">Receipients</label>
             <textarea class="form-control" name="mailing_list" id="exampleFormControlTextarea1" rows="3" placeholder="Type ',' after you enter an email."></textarea>
         </div>
-        <!-- <div class="form-group">    
-            <label for="exampleFormControlTextarea1" class="form-label">Recipients</label>
-          <div class="input-group input-group-md">
-            <input type="text" id="example_emailBS" name="example_emailBS" class="form-control" value='["damian.raffa@mobileum.com","user@mobileum.com"]'>
-            <span class="input-group-btn">
-              <button class="btn red" type="button"><i class="fa fa-calendar-plus-o"></i></button>
-             </span>
-          </div>
-        </div> -->
-        <!-- <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Recipients</label>
-            <textarea class="form-control" name="meeting_agenda" id="exampleFormControlTextarea1" rows="3" placeholder="Enter meeting agenda."></textarea>
-        </div> -->
-<<<<<<< HEAD
-        <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Recipients</label>
-            <div id="emailsList">
-                <ul name="emailsList">
-                </ul>
-=======
-        <!-- <div class="mb-3">
-            <div class="heading ">
-                <label for="exampleFormControlTextarea1" class="form-label">Recipients</label>
->>>>>>> main
-            </div>
-            <input class="form-control" value="" placeholder="Type ',' or hit 'space' after you enter an email" type="text" name = 'mailing_list' id="mailing_list">
-            <!-- <div id="contact-us" class="form ">
-                <div id="contactForm">
-                    <p data-error="email" class="errors"></p>
-                    
-                </div>
-                <p id="emailJson"></p>
-            </div> -->
-        </div>
-            <script>class AddEmails {
-                constructor() {
-                   this.emailInput = document.getElementById("mailing_list");
-                   this.emailListContainer = document.querySelector("div#emailsList ul");
-                }
-                // some regex copied from internet
-                isValidEmail(val) {
-                   let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                   return re.test(val);
-                }
-            
-                getEmails() {
-                   var emails = [];
-                   document.querySelectorAll("div#emailsList ul li").forEach((ele) => {
-                      emails.push(ele.innerHTML.replace(/ /g, ""));
-                   });
-            
-                   console.log(JSON.stringify(emails));
-                }
-            
-                init() {
-                   this.emailInput.onkeyup = (e) => {
-            
-                      if (e.keyCode == 0 || e.keyCode == 32 || e.keyCode == 13 || e.keyCode == 188) {
-            
-                         let val = e.target.value.trim().replace(/ /g, "").replace(/,/g, "");
-            
-                         if (this.isValidEmail(val)) {
-                            console.log(val);
-            
-                            let li = document.createElement('li');
-                            li.innerHTML = val;
-                            this.emailListContainer.appendChild(li);
-                            this.emailInput.value = "";
-            
-                            // removing email from the list
-                            li.addEventListener("click", function (e) {
-            
-                               e.target.parentNode.removeChild(e.target);
-                            });
-            
-                            this.getEmails();
-            
-                            return;
-                         }
-                      }
-                   }
-            
-            
-                }
-            
-            
-             }
-             -->
-             <!-- var addEmails = new AddEmails();
-             addEmails.init();
-            
-            //  var demoEmails = "Type <kbd>,</kbd> or hit <kbd>space</kbd> after you enter an email";
-            
-            
-            //  var myVar = setInterval(myTimer, 200);
-            
-            //  var i = 0;
-            
-             function myTimer() {
-            
-                if (i == (demoEmails.length)) {
-                   myStopFunction();
-                   return;
-                }
-            
-                document.getElementById("email").value = document.getElementById("email").value + demoEmails[i];
-                i++;
-             }
-            
-             function myStopFunction() {
-                clearInterval(myVar);
-                document.getElementById("mailing_list").dispatchEvent(new KeyboardEvent('keyup', { 'key': 'enter' }));
-             }
-            </script> -->
+        
         <div class="mb-3">
             <label for="formFileMultiple" class="form-label">Upload meeting audio/video</label>
             <input class="form-control" type="file" name="mtng_file" id="formFileMultiple">
@@ -239,7 +129,14 @@
         <div class="col-12">
             <button type="submit" class="btn btn-primary">Save and Upload</button>
         </div>
+        <script type="text/javascript">// <![CDATA[
+            function loading(){
+                $("#loading").show();
+                $("#content").hide();       
+            }
+    // ]]></script>
     </form>
+    </div> 
     <br>
     <style>
         form {
