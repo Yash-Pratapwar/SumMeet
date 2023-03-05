@@ -81,12 +81,12 @@
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Meeting Name</label>
             <input type="text" class="form-control" name="meeting_name" id="exampleFormControlInput1"
-                placeholder="{{ meeting_name }}" value="{{ meeting_name }}">
+                placeholder="{{ up_file.meeting_name }}" value="{{ up_filemeeting_name }}">
         </div>
         <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label">Mailing List</label>
             <input type="text" class="form-control" name="mailing_list" id="exampleFormControlInput1"
-                placeholder="{{ email_list.mailing_list }}" value="{% for value in email_list.mailing_list: %}
+                placeholder="{{ up_file.mailing_list }}" value="{% for value in up_file.mailing_list: %}
                 {{ value }}
                 {% endfor %}" >
         </div>

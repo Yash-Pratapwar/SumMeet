@@ -9,10 +9,12 @@ from summeet_package import db, create_app, app
 from werkzeug.utils import secure_filename
 from summeet_package.models import uploaded_files
 # from summeet_package.models import advt_approval
-# import rec_sys as model
+import text_sum as model_text_sum
+import openai_whisper as model_text_transcript
+
 
 app = Flask(__name__)
-UPLOAD_FOLDER = 'static/uploads'
+UPLOAD_FOLDER = 'uploads/audio_files_uploaded'
 ALLOWED_EXTENSIONS = set(['mp3', 'wav', 'mp4'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -172,43 +174,42 @@ def user_summary():
         user_fname = current_user.fname
         owner_id = current_user.id
         user_email=current_user.user_email
-        email_list = uploaded_files.query.filter_by(owner_id=owner_id).first()
-        print(email_list.mailing_list)
-        return render_template('user_summary.html', user_email=user_email, email_list=email_list, user_name=user_fname)
+        up_file = uploaded_files.query.filter_by(owner_id=owner_id).first()
+        return render_template('user_summary.html', user_email=user_email, up_file=up_file, user_name=user_fname)
 
-@views.route('/advt/update_advertise/<int:id>', methods = ['GET', 'POST'])
-@login_required
-def advt_update(id):
-    name_to_update = uploaded_files.query.filter(uploaded_files.id==id).first()
-    advt = uploaded_files.query.filter_by(id=id).first()
-    advt_name_update = uploaded_files.query.filter_by(id=id).first()
-    files = request.files.getlist('prdt_imgs')
-    for file in files:
-        if file and allowed_file(file.filename):
-            name_to_update.desc = request.form.get('desc')
-            name_to_update.brand = request.form.get('brand')
-            name_to_update.deadline = request.form.get('deadline')
-            name_to_update.prdt_sp = request.form.get('prdt_sp')
-            name_to_update.age_grp = request.form.get('age_grp')
-            name_to_update.prdt_imgs = request.files['prdt_imgs']
-            filename = secure_filename(name_to_update.prdt_imgs.filename)  
-            name_to_update.name = filename
-            advt_name_update.advt_name = filename
-            try:
-                file.save(os.path.join(basedir, app.config['UPLOAD_FOLDER'], filename))
-                db.session.commit()                    
-                flash('Database updated successfully!')
-                return redirect(url_for('views.advt_dashboard'))
-            except:
-                file.save(os.path.join(basedir, app.config['UPLOAD_FOLDER'], filename))
-                db.session.commit()                    
-                flash('Database updated successfully!')
-                return redirect(url_for('views.advt_dashboard'))
+# @views.route('/advt/update_advertise/<int:id>', methods = ['GET', 'POST'])
+# @login_required
+# def advt_update(id):
+#     name_to_update = uploaded_files.query.filter(uploaded_files.id==id).first()
+#     advt = uploaded_files.query.filter_by(id=id).first()
+#     advt_name_update = uploaded_files.query.filter_by(id=id).first()
+#     files = request.files.getlist('prdt_imgs')
+#     for file in files:
+#         if file and allowed_file(file.filename):
+#             name_to_update.desc = request.form.get('desc')
+#             name_to_update.brand = request.form.get('brand')
+#             name_to_update.deadline = request.form.get('deadline')
+#             name_to_update.prdt_sp = request.form.get('prdt_sp')
+#             name_to_update.age_grp = request.form.get('age_grp')
+#             name_to_update.prdt_imgs = request.files['prdt_imgs']
+#             filename = secure_filename(name_to_update.prdt_imgs.filename)  
+#             name_to_update.name = filename
+#             advt_name_update.advt_name = filename
+#             try:
+#                 file.save(os.path.join(basedir, app.config['UPLOAD_FOLDER'], filename))
+#                 db.session.commit()                    
+#                 flash('Database updated successfully!')
+#                 return redirect(url_for('views.advt_dashboard'))
+#             except:
+#                 file.save(os.path.join(basedir, app.config['UPLOAD_FOLDER'], filename))
+#                 db.session.commit()                    
+#                 flash('Database updated successfully!')
+#                 return redirect(url_for('views.advt_dashboard'))
 
-    advt_id = id
-    user_email = current_user.comp_email
-    advts = uploaded_files.query.filter_by(id=advt_id).first()
-    return render_template('advt_update_uploaded_files.html',advt=advt, advts=advts, user_email=user_email, id=advt_id )
+#     advt_id = id
+#     user_email = current_user.comp_email
+#     advts = uploaded_files.query.filter_by(id=advt_id).first()
+#     return render_template('advt_update_uploaded_files.html',advt=advt, advts=advts, user_email=user_email, id=advt_id )
 
 # @views.route('/advt/delete_advertise/<int:id>')
 # @login_required
@@ -280,78 +281,3 @@ def advt_update(id):
 # def advt_details(advt_id):
 #     advt = uploaded_files.query.filter_by(id=advt_id).first()
 #     return render_template('advt_details.html', advt=advt)
-
-@views.route('/adv_regis', methods=['GET', 'POST'])
-def adv_regis():
-    if request.method == 'POST':
-        user_name = request.form.get("user_name")
-        acc_handler_name = request.form.get("acc_handler_name")
-        acc_handler_desig = request.form.get("acc_handler_desig")
-        comp_website = request.form.get("comp_website")
-        ph_no = request.form.get("ph_no")
-        comp_email = request.form.get("comp_email")
-        ah_email = request.form.get("ah_email")
-        categories = request.form.get("advt_categories")
-        pswd1 = request.form.get("pswd1")
-        acc_handler_gender = request.form["gender"]
-        acc_type = 'advt'
-        # max_id = db.session.query(users).order_by(users.id.desc()).first()
-        # id = db.session.query(users)
-        # print(max_id.id)
-        user = users.query.filter_by(comp_email=comp_email).first()
-        if user:
-            flash('Email already exists.', category='error')
-            return render_template('advertiser-registration.html')
-        else:
-            hashed_password = generate_password_hash(
-                pswd1, method='sha256')
-            # if 
-            # adv_regis_user = users(id=max_id.id+1, user_name=user_name, acc_handler_name=acc_handler_name,
-            adv_regis_user = users(user_name=user_name, acc_handler_name=acc_handler_name,
-            acc_handler_desig=acc_handler_desig, comp_website=comp_website, ph_no=ph_no, comp_email=comp_email,
-            ah_email=ah_email, categories=categories,password=hashed_password, acc_handler_gender=acc_handler_gender, acc_type=acc_type)
-            db.session.add(adv_regis_user)
-            db.session.commit()
-            flash('Account created! Please login', category='success')
-            return redirect(url_for('views.login'))
-    return render_template('advertiser-registration.html')
-
-
-@views.route('/inf_regis', methods=['GET', 'POST'])
-def inf_regis():
-    if request.method == 'POST':
-        file = request.files['infl_pic']
-        if file and allowed_file(file.filename):
-            fname = request.form.get("fname")
-            lname = request.form.get("lname")
-            smh = request.form.get("smh")
-            ph_no = request.form.get("ph_no")
-            inf_email = request.form.get("inf_email")
-            categories = request.form.get("inf_categories")
-            age = request.form.get("age")
-            pswd1 = request.form.get("pswd1")
-            infl_pic = request.files["infl_pic"]
-            gender = request.form["gender"]
-            acc_type = 'infl'
-            max_id = db.session.query(users).order_by(users.id.desc()).first()
-            filename = secure_filename(file.filename)
-            print(filename)
-            mimetype = infl_pic.mimetype
-
-            file.save(os.path.join(basedir, app.config['UPLOAD_FOLDER'], filename))
-
-            user = users.query.filter_by(inf_email=inf_email).first()
-            if user:
-                flash('Email already exists.', category='error')
-                return render_template('influencer-registration.html')
-            else:
-                hashed_password = generate_password_hash(
-                    pswd1, method='sha256')
-                inf_regis_user = users(id=max_id.id+1, fname=fname, lname=lname, smh=smh,ph_no=ph_no, 
-                inf_email=inf_email, categories=categories,password=hashed_password, 
-                age=age, gender=gender, acc_type=acc_type, infl_pic = filename, mimetype=mimetype)
-                db.session.add(inf_regis_user)
-                db.session.commit()
-                flash('Account created! Please login', category='success')
-                return redirect(url_for('views.login'))
-    return render_template('influencer-registration.html')
