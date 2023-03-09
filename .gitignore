@@ -1,3 +1,5 @@
+**/__pycache__
+**/summeet_package/__pycache__
 summeet_package/__pycache__/models.cpython-38.pyc
 summeet_package/__pycache__/__init__.cpython-38.pyc
 summeet_package/__pycache__/views.cpython-38.pyc
@@ -18,3 +20,12 @@ videos/videoplayback.mp4
 summeet_package/__init__.py
 summeet_package/__pycache__/__init__.cpython-310.pyc
 summeet_package/__pycache__/__init__.cpython-310.pyc
+__pycache__/openai_whisper.cpython-310.pyc
+.gitignore
+__pycache__/text_sum.cpython-310.pyc
+summeet_package/__pycache__/__init__.cpython-310.pyc
+summeet_package/__pycache__/models.cpython-310.pyc
+summeet_package/__pycache__/views.cpython-310.pyc
+summeet_package/__pycache__/__init__.cpython-310.pyc
+summeet_package/__pycache__/models.cpython-310.pyc
+summeet_package/__pycache__/views.cpython-310.pyc

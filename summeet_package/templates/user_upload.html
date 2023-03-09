@@ -89,8 +89,16 @@
     {% endfor %}
     
     <body onload="firstfocus()"></body>
-    <div id="loading"></div>
-    <div id="content"></div>
+    
+    <!-- <div class="d-flex justify-content-center">
+        <div class="spinner-wrapper">
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only"></span>
+              </div>
+        </div>  
+    </div> -->
+    
+    
     <form name='advertisements' enctype=multipart/form-data method="POST" onsubmit="return validate()" >
         <br>
         <div class="mb-3">
@@ -127,14 +135,25 @@
             <input class="form-control" type="file" name="mtng_file" id="formFileMultiple">
         </div>
         <div class="col-12">
-            <button type="submit" class="btn btn-primary">Save and Upload</button>
+            <button type="submit" class="btn btn-primary" onclick="return loader()">Save and Upload</button>
         </div>
-        <script type="text/javascript">// <![CDATA[
+        <!-- <script>
+            function loader(){
+                const spinnerWrapperE1 = document.querySelector('.spinner-wrapper');
+            window.addEventListener('load', () => {
+                spinnerWrapperE1.style.opacity = '0';
+                setTimeout(() =>{
+                    spinnerWrapperE1.style.display = 'none'; 
+                }, 200); 
+            });
+            }
+        </script> -->
+        <!-- <script type="text/javascript">// <![CDATA[
             function loading(){
                 $("#loading").show();
                 $("#content").hide();       
             }
-    // ]]></script>
+    // ]]></script> -->
     </form>
     </div> 
     <br>
