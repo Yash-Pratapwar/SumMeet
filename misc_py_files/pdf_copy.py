@@ -23,6 +23,6 @@ pdf.cell(175, 10, txt = "SumMeet",
 # add another cell
 pdf.cell(200, 10, txt = "Meeting Minutes",
 		ln = 1, align = 'L')
-pdf.line_width
+pdf.line(x1=10, y1=2, x2=-10, y2=2)
 # save the pdf with name .pdf
 pdf.output("GFG.pdf")
