@@ -11,7 +11,7 @@ from summeet_package.models import uploaded_files
 from summeet_package.models import summarised_text
 import text_sum as model_text_sum
 import openai_whisper as model_text_transcript
-
+import pdf as pdf_loader
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'audio_files_uploaded'
@@ -178,7 +178,8 @@ def user_processing_summary():
         f_name = file_name[:-4]
         model_text_transcript.text_transcript(f_name)
         sum_text = model_text_sum.text_summ(f_name)
-        summ_file = summarised_text(sum_text=sum_text, owner_id = owner_id)
+        sum_file_name = f_name+'_summarized'
+        summ_file = summarised_text(sum_text=sum_text, owner_id = owner_id, sum_file_name=sum_file_name)
         db.session.add(summ_file)
         db.session.commit()
         return redirect(url_for('views.user_summary'))
@@ -193,9 +194,13 @@ def user_summary():
         user_fname = current_user.fname
         user_email=current_user.user_email
         up_file = uploaded_files.query.order_by(uploaded_files.id.desc()).first()
-        file_name = up_file.meeting_name
-        print(file_name)
         summ_text_tuple = summarised_text.query.order_by(summarised_text.id.desc()).first()
         summ_text = summ_text_tuple.sum_text
+        file_name = summ_text_tuple.sum_file_name
+        title = up_file.meeting_name
+        date = up_file.meeting_date
+        date = str(date)
+        agenda = up_file.meeting_agenda
+        pdf_loader.pdf_generation(file_name, title, date, agenda)
         
         return render_template('user_summary.html', user_email=user_email, up_file=up_file, user_name=user_fname, summ_text=summ_text)

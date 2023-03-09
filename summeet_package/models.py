@@ -35,3 +35,5 @@ class summarised_text(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key = True)
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     sum_text = db.Column(db.Text, nullable = True) 
+    sum_file_name = db.Column(db.Text, nullable = True) 
+    
