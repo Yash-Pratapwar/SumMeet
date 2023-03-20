@@ -1,5 +1,5 @@
 import os
-from flask import Blueprint, Response, Flask, session
+from flask import Blueprint, Response, Flask, session, send_file
 from flask import request, render_template, url_for, redirect, flash
 from flask_login import login_user, login_required, logout_user, current_user
 from flask import render_template, request
@@ -11,7 +11,8 @@ from summeet_package.models import uploaded_files
 from summeet_package.models import summarised_text
 import text_sum as model_text_sum
 import openai_whisper as model_text_transcript
-
+import pdf as pdf_loader
+import emailer as email_sender
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'audio_files_uploaded'
@@ -87,36 +88,6 @@ def user_dashboard():
         return redirect(url_for('views.login'))
     else:
         name = current_user.fname
-        # recmd_infl = model.recm_sys(name)
-        # owner_id = current_user.id
-        # advts_owner= uploaded_files.query.all()
-        # advts = uploaded_files.query.filter_by(owner_id=owner_id)
-        # advts_oid = uploaded_files.query.filter_by(owner_id=owner_id).first()
-        # recmd_infl.remove(owner_id)
-        # main=[]
-        # for inf_id in recmd_infl:
-        #     inf = users.query.filter_by(id=inf_id)
-        #     for infl in inf:
-        #         f = infl.fname
-        #         l = infl.lname
-        #         c = infl.categories
-        #         s = infl.smh
-        #         n = infl.infl_pic
-        #         abc=[]
-        #         abc.append(f)
-        #         abc.append(l)
-        #         abc.append(c)
-        #         abc.append(s)
-        #         abc.append(n)
-        #         main.append(abc)
-        # print(main)
-        # try:
-        #     # adv_oid = advts_oid.owner_id
-        #     if adv_oid:
-        #         return render_template('user_dashboard.html', name=name, advts_owner=advts_owner, adv_oid=adv_oid, owner_id=owner_id,main = main)
-        #     else:
-        #         return render_template('user_dashboard.html',advts=advts, name=name, advts_owner=advts_owner, owner_id=owner_id, main = main)
-        # except:
         return render_template('user_dashboard.html', name=name)
 
 
@@ -178,7 +149,8 @@ def user_processing_summary():
         f_name = file_name[:-4]
         model_text_transcript.text_transcript(f_name)
         sum_text = model_text_sum.text_summ(f_name)
-        summ_file = summarised_text(sum_text=sum_text, owner_id = owner_id)
+        sum_file_name = f_name+'_summarized'
+        summ_file = summarised_text(sum_text=sum_text, owner_id = owner_id, sum_file_name=sum_file_name)
         db.session.add(summ_file)
         db.session.commit()
         return redirect(url_for('views.user_summary'))
@@ -193,9 +165,45 @@ def user_summary():
         user_fname = current_user.fname
         user_email=current_user.user_email
         up_file = uploaded_files.query.order_by(uploaded_files.id.desc()).first()
-        file_name = up_file.meeting_name
-        print(file_name)
         summ_text_tuple = summarised_text.query.order_by(summarised_text.id.desc()).first()
+        file_name = up_file.file_name
+        f_name = file_name[:-4]
+        file = open('summeet_package/transcripted_files/'+f_name+'.txt', 'r')
+        trans_text = file.read()
+        # trans_text = summ_text_tuple.trans_text 
         summ_text = summ_text_tuple.sum_text
+        file_name = summ_text_tuple.sum_file_name
+        title = up_file.meeting_name
+        date = up_file.meeting_date
+        date = str(date)
+        agenda = up_file.meeting_agenda
+        pdf_loader.pdf_generation(file_name, title, date, agenda)
         
-        return render_template('user_summary.html', user_email=user_email, up_file=up_file, user_name=user_fname, summ_text=summ_text)
+        return render_template('user_summary.html', user_email=user_email, up_file=up_file, user_name=user_fname, summ_text=summ_text, trans_text=trans_text)
+
+@views.route('/user/upload/summary/pdf', methods = ['GET', 'POST'])
+@login_required
+def user_summary_pdf():
+    if current_user.fname == None:
+        flash('Please login')
+        return redirect(url_for('views.login'))
+    else:
+        up_file = uploaded_files.query.order_by(uploaded_files.id.desc()).first()
+        file_name = up_file.file_name
+        f_name = file_name[:-4]
+        print(f_name)
+        pdf_filename = "generated_pdfs/"+f_name+"_summarized.pdf"
+        return send_file(pdf_filename, mimetype='application/pdf', as_attachment=True)
+        
+@views.route('/user/upload/summary/mail', methods = ['GET', 'POST'])
+@login_required
+def user_summary_mail():
+    if current_user.fname == None:
+        flash('Please login')
+        return redirect(url_for('views.login'))
+    else:
+        up_file = uploaded_files.query.order_by(uploaded_files.id.desc()).first()
+        email_sender.send_email(up_file)
+        
+        flash("Mail sent successfully!", category='success')
+        return redirect(url_for('views.user_dashboard'))

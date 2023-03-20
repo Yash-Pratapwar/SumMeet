@@ -1,3 +1,6 @@
+summeet_package\generated_pdfs
+misc_files
+summeet_package\__pycache__
 **/__pycache__
 **/summeet_package/__pycache__
 summeet_package/__pycache__/models.cpython-38.pyc
@@ -29,3 +32,4 @@ summeet_package/__pycache__/views.cpython-310.pyc
 summeet_package/__pycache__/__init__.cpython-310.pyc
 summeet_package/__pycache__/models.cpython-310.pyc
 summeet_package/__pycache__/views.cpython-310.pyc
+summeet_package/generated_pdfs/short_summarized.pdf
