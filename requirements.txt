@@ -3,11 +3,12 @@
 # platform: win-64
 appdirs=1.4.4=pypi_0
 audioread=3.0.0=pypi_0
+autopep8=1.6.0=pyhd3eb1b0_1
 blas=1.0=mkl
 brotlipy=0.7.0=py310h2bbff1b_1002
 bzip2=1.0.8=he774522_0
-ca-certificates=2022.12.7=h5b45459_0
-certifi=2022.12.7=pyhd8ed1ab_0
+ca-certificates=2023.01.10=haa95532_0
+certifi=2022.12.7=py310haa95532_0
 cffi=1.15.1=py310h2bbff1b_0
 charset-normalizer=2.0.4=pyhd3eb1b0_0
 click=8.0.3=pypi_0
@@ -16,6 +17,7 @@ comtypes=1.1.14=pypi_0
 cryptography=37.0.1=py310h21b164f_0
 cudatoolkit=10.2.89=h74a9793_1
 decorator=4.4.2=pypi_0
+defusedxml=0.7.1=pypi_0
 docopt=0.6.2=pypi_0
 ffmpeg=4.3.1=ha925a31_0
 ffmpeg-python=0.2.0=pypi_0
@@ -23,6 +25,9 @@ filelock=3.8.0=pypi_0
 flask=2.0.2=pypi_0
 flask-login=0.5.0=pypi_0
 flask-sqlalchemy=2.5.1=pypi_0
+fonttools=4.39.0=pypi_0
+fpdf=1.7.2=pypi_0
+fpdf2=2.6.1=pypi_0
 freetype=2.10.4=hd328e21_0
 future=0.18.3=pypi_0
 greenlet=1.1.2=pypi_0
@@ -59,7 +64,8 @@ numpy-base=1.23.1=py310h206c741_0
 openai-whisper=20230117=pypi_0
 openssl=1.1.1t=h2bbff1b_0
 packaging=21.3=pypi_0
-pillow=9.2.0=py310hdc2b20a_1
+pdfkit=1.0.0=pypi_0
+pillow=9.4.0=pypi_0
 pip=22.2.2=py310haa95532_0
 pipreqs=0.4.11=pypi_0
 pooch=1.6.0=pypi_0
@@ -67,6 +73,7 @@ portaudio=19.6.0=h0e60522_6
 proglog=0.1.10=pypi_0
 psycopg2-binary=2.9.3=pypi_0
 pyaudio=0.2.12=pypi_0
+pycodestyle=2.10.0=py310haa95532_0
 pycparser=2.21=pyhd3eb1b0_0
 pydub=0.25.1=pyhd8ed1ab_0
 pyopenssl=22.0.0=pyhd3eb1b0_0
@@ -97,6 +104,7 @@ sqlite=3.39.3=h2bbff1b_0
 threadpoolctl=3.1.0=pypi_0
 tk=8.6.12=h2bbff1b_0
 tokenizers=0.12.1=pypi_0
+toml=0.10.2=pyhd3eb1b0_0
 torchvision=0.13.1=py310_cpu
 tqdm=4.64.1=pypi_0
 transformers=4.22.2=pypi_0
