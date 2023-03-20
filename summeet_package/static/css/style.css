@@ -1656,3 +1656,7 @@ div#loading {
     height: 60px;
     width: 60px;
   }
+
+  .btn-space {
+    margin-right: 10px;
+}
