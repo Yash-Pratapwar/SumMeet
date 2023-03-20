@@ -30,8 +30,8 @@ def create_app():
     app.register_blueprint(views, url_prefix='/')
 
     from .models import users, uploaded_files
-    
-    create_database(app) #uncomment this line to create schema
+    print('App started!')
+    # create_database(app) #uncomment this line to create schema
 
     login_manager = LoginManager()
     login_manager.init_app(app)

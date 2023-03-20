@@ -19,11 +19,12 @@ def pdf_generation(file_name, title, date, agenda):
 				# Line break
 				self.set_font('helvetica', 'BI', 11)
 				self.ln(20)
-				self.cell(30,20,'Title:\t\t\t\t\t'+title)
+				self.cell(30,20,'Title:     '+title)
 				self.ln(10)
-				self.cell(30,20,'Date:\t\t\t\t\t'+date)
-				self.ln(10)
-				self.multi_cell(30,20,'Agenda:\t\t\t\t\t'+agenda)
+				self.cell(30,20,'Date:     '+date)
+				self.ln(15)
+				# self.multi_cell(30,20,'Agenda:\t\t\t\t\t'+agenda)
+				self.multi_cell(200, 10, 'Agenda:     '+agenda)
 				self.ln(10)
 
 		# Page footer
@@ -59,4 +60,4 @@ def pdf_generation(file_name, title, date, agenda):
 	for g in file:
 		pdf.multi_cell(200, 10, txt=g, new_x=XPos.LMARGIN, new_y=YPos.NEXT)
 
-	pdf.output('summeet_package/generated_pdfs/pdf_2.pdf')
+	pdf.output('summeet_package/generated_pdfs/'+file_name+'.pdf')
