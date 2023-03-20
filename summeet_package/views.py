@@ -1,5 +1,5 @@
 import os
-from flask import Blueprint, Response, Flask, session
+from flask import Blueprint, Response, Flask, session, send_file
 from flask import request, render_template, url_for, redirect, flash
 from flask_login import login_user, login_required, logout_user, current_user
 from flask import render_template, request
@@ -88,36 +88,6 @@ def user_dashboard():
         return redirect(url_for('views.login'))
     else:
         name = current_user.fname
-        # recmd_infl = model.recm_sys(name)
-        # owner_id = current_user.id
-        # advts_owner= uploaded_files.query.all()
-        # advts = uploaded_files.query.filter_by(owner_id=owner_id)
-        # advts_oid = uploaded_files.query.filter_by(owner_id=owner_id).first()
-        # recmd_infl.remove(owner_id)
-        # main=[]
-        # for inf_id in recmd_infl:
-        #     inf = users.query.filter_by(id=inf_id)
-        #     for infl in inf:
-        #         f = infl.fname
-        #         l = infl.lname
-        #         c = infl.categories
-        #         s = infl.smh
-        #         n = infl.infl_pic
-        #         abc=[]
-        #         abc.append(f)
-        #         abc.append(l)
-        #         abc.append(c)
-        #         abc.append(s)
-        #         abc.append(n)
-        #         main.append(abc)
-        # print(main)
-        # try:
-        #     # adv_oid = advts_oid.owner_id
-        #     if adv_oid:
-        #         return render_template('user_dashboard.html', name=name, advts_owner=advts_owner, adv_oid=adv_oid, owner_id=owner_id,main = main)
-        #     else:
-        #         return render_template('user_dashboard.html',advts=advts, name=name, advts_owner=advts_owner, owner_id=owner_id, main = main)
-        # except:
         return render_template('user_dashboard.html', name=name)
 
 
@@ -218,21 +188,13 @@ def user_summary_pdf():
         flash('Please login')
         return redirect(url_for('views.login'))
     else:
-        user_fname = current_user.fname
-        user_email=current_user.user_email
         up_file = uploaded_files.query.order_by(uploaded_files.id.desc()).first()
-        summ_text_tuple = summarised_text.query.order_by(summarised_text.id.desc()).first()
-        summ_text = summ_text_tuple.sum_text
-        file_name = summ_text_tuple.sum_file_name
-        title = up_file.meeting_name
-        date = up_file.meeting_date
-        date = str(date)
-        agenda = up_file.meeting_agenda
-        pdf_loader.pdf_generation(file_name, title, date, agenda)
+        file_name = up_file.file_name
+        f_name = file_name[:-4]
+        print(f_name)
+        pdf_filename = "generated_pdfs/"+f_name+"_summarized.pdf"
+        return send_file(pdf_filename, mimetype='application/pdf', as_attachment=True)
         
-        return render_template('user_summary.html', user_email=user_email, up_file=up_file, user_name=user_fname, summ_text=summ_text)
-    
-
 @views.route('/user/upload/summary/mail', methods = ['GET', 'POST'])
 @login_required
 def user_summary_mail():
