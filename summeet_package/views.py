@@ -166,20 +166,24 @@ def user_summary():
         user_email=current_user.user_email
         up_file = uploaded_files.query.order_by(uploaded_files.id.desc()).first()
         summ_text_tuple = summarised_text.query.order_by(summarised_text.id.desc()).first()
-        file_name = up_file.file_name
-        f_name = file_name[:-4]
-        file = open('summeet_package/transcripted_files/'+f_name+'.txt', 'r')
-        trans_text = file.read()
-        # trans_text = summ_text_tuple.trans_text 
-        summ_text = summ_text_tuple.sum_text
-        file_name = summ_text_tuple.sum_file_name
-        title = up_file.meeting_name
-        date = up_file.meeting_date
-        date = str(date)
-        agenda = up_file.meeting_agenda
-        pdf_loader.pdf_generation(file_name, title, date, agenda)
-        
-        return render_template('user_summary.html', user_email=user_email, up_file=up_file, user_name=user_fname, summ_text=summ_text, trans_text=trans_text)
+        if up_file and summ_text_tuple:
+            file_name = up_file.file_name
+            f_name = file_name[:-4]
+            file = open('summeet_package/transcripted_files/'+f_name+'.txt', 'r')
+            trans_text = file.read()
+            # trans_text = summ_text_tuple.trans_text 
+            summ_text = summ_text_tuple.sum_text
+            file_name = summ_text_tuple.sum_file_name
+            title = up_file.meeting_name
+            date = up_file.meeting_date
+            date = str(date)
+            agenda = up_file.meeting_agenda
+            pdf_loader.pdf_generation(file_name, title, date, agenda)
+            
+            return render_template('user_summary.html', user_email=user_email, up_file=up_file, user_name=user_fname, summ_text=summ_text, trans_text=trans_text)
+        else:
+            flash('Nothing summarized yet!')
+            return redirect(url_for('views.user_dashboard'))
 
 @views.route('/user/upload/summary/pdf', methods = ['GET', 'POST'])
 @login_required

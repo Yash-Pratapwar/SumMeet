@@ -1,5 +1,6 @@
 summeet_package\generated_pdfs
 misc_files
+audio_files_uploaded
 summeet_package\__pycache__
 **/__pycache__
 **/summeet_package/__pycache__
@@ -33,3 +34,4 @@ summeet_package/__pycache__/__init__.cpython-310.pyc
 summeet_package/__pycache__/models.cpython-310.pyc
 summeet_package/__pycache__/views.cpython-310.pyc
 summeet_package/generated_pdfs/short_summarized.pdf
+summeet_package/audio_files_uploaded/playback_short.mp3
